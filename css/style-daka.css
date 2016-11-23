@@ -1,0 +1,35 @@
+﻿.table td { vertical-align: middle!important; }
+.bumen-box { position: absolute; display: block; min-width: 200px; z-index: 999; top: 22px; }
+.ylui-searchbtn { margin-right: 3px; position: absolute; right: 18px; top: 48px; }
+.ylui-btn-group { display: inline-flex; }
+.ylui-radio { display: inline-block; }
+.box-header { min-height: 30px; background-color: #428bca; }
+    .box-header h4 { padding: 5px; color: #fff; }
+.bumenbox-body { border: 1px solid #5090c1; margin-top: -10px; background-color: #fff; height: 250px; overflow: auto; min-width: 200px; }
+input[type=checkbox].ace + .lbl::before, input[type=radio].ace + .lbl::before { margin-right: 10px; }
+
+.kq-btn { float: right; margin-right: 3px; }
+.ylui-th-checkbox { width: 60px; }
+.ylui-btn-group input, textarea, ylui-btn-group .btn, select { height: 35px; }
+#ui-datepicker-div { z-index: 9999!important; }
+.table th, .table td { text-align: center; }
+.dataTables_wrapper .row:first-child { background-color: #fff; padding: 0; }
+a:hover { text-decoration: none; }
+.table { background-color: #fff; }
+.ylui-modal-content { min-width: 450px; margin-top: 45%; z-index: 1; margin-left: auto; margin-right: auto; }
+.ylui-modal-header { height: 45px; background-image: linear-gradient(to bottom,#f8f8f8 0,#ececec 100%); line-height: 45px; font-size: 18px; }
+.ylui-header-title { padding-left: 13px; font-family: "宋体"; }
+.ylui-close { padding: 12px 20px 10px 0!important; }
+.ylui-box { margin-bottom: 0; border: 0; border-radius: 0; padding: 20px; background-color: #fff; }
+
+.ylui-box-body { border: 1px solid #ccd1f2; padding: 10px; }
+.ylui-table-left { color: #0201ff; font-size: 18px; }
+
+
+.modal-content { margin-top: 45%; }
+.modal-body { padding: 20px 20px 5px 20px; }
+.modal-header .close { font-size: 27px; }
+.modal-header { font-size: 18px; }
+
+.body-delete { text-align: center; }
+.ylui-title-span { padding: 0 8px; }

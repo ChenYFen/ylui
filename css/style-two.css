@@ -1,0 +1,63 @@
+﻿/* CSS Document */
+
+/* * */
+.btn { border-width: 1px!important; }
+.ylui-searchbtn { float: right; margin-right: 3px; }
+.ylui-zt { color: red; }
+.ylui-tabsbtn { margin-bottom: 10px; }
+.ylui-btn-group { display: inline-flex; }
+a:hover { text-decoration: none; }
+
+/*modal*/
+.modal-content { margin-top: 45%; }
+.ylui-title-span { padding: 0 8px; }
+.modal-body { padding: 20px 20px 5px 20px; }
+.modal-header .close { font-size: 27px; }
+.modal-header { font-size: 18px; }
+.ylui-box-body { border: 1px solid #ccd1f2; padding: 10px; }
+.ylui-table-left { color: #0201ff; font-size: 18px; }
+
+/*message*/
+.ylui-table-responsive { margin-top: 10px; }
+
+
+
+/*sent-message*/
+
+.tag-input-style + .chosen-container-multi .chosen-choices li.search-choice { background-color: #428bca; }
+.chosen-container { width: 100%!important; }
+.ylui-box-footer-button { position:absolute; left: 40%; }
+.bumen-box { position: absolute; display: block; min-width: 200px; z-index: 5; top: 22px; }
+.ylui-radio { display: inline-block; }
+.box-header { min-height: 30px; background-color: #428bca; }
+    .box-header h4 { padding: 5px; color: #fff; }
+.bumenbox-body { border: 1px solid #5090c1; margin-top: -10px; background-color: #fff; height: 250px; overflow: auto; min-width: 200px; }
+input[type=checkbox].ace + .lbl::before, input[type=radio].ace + .lbl::before { 
+    margin-right: 10px;
+}
+
+/*project*/
+
+
+
+/*shenpi*/
+
+
+
+/*shenqing*/
+
+
+
+/*jianbao*/
+.ylui-jieshou { font-size: 18px; margin-top: 3px; }
+        .ylui-jieshou a { color: #858585; }
+
+
+
+
+
+
+
+
+/*redutu*/
+

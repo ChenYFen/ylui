@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>首页-char</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/ace.min.css" />
+    <link rel="stylesheet" href="css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="css/ace-skins.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="char/echartsHome.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .ylui-pull-right { padding-right: 10px;font-size:16px; }
+
+        .ylui-widget-header { color: #fff; background-color: #428bca; border-color: #428bca; padding: 3px 10px; }
+        a:hover { text-decoration: none; }
+
+        #marquee6{width:100%;height:200px; overflow:hidden;}
+        #marquee6 ul li{padding:0 10px;line-height:30px;height:30px;overflow:hidden;font-size:17px;}
+        .ylui-news-list li { 
+            font-size:17px;
+        }
+        .ylkui-panel-body { 
+            height:200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="index.html" class="navbar-brand">
+                    <small>
+                        <i class="icon-cloud"></i>
+                        客户分析云
+                    </small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle ylui-nav-right">
+                            <img class="nav-user-photo" src="images/default_user.jpg" alt="头像" />
+                            <span class="user-info">
+                                <small>admin,欢迎您回来</small>
+                                <small id="localtime">2015-11-26 13：42 星期一</small>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class=" icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="3">
+                                    <i class="icon-edit"></i>
+                                    修改密码
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="logout" href="javascript:void(0);" url="/Account/Auth/Logout">
+                                    <i class="icon-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="light-blue">
+                        <a class="logout ylui-nav-right" href="javascript:void(0);" url="/Account/Auth/Logout">
+                            <i class="icon-off"></i>
+                            注销
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+                        <span class="btn btn-info"></span>
+                        <span class="btn btn-warning"></span>
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+                <ul class="nav nav-list">
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">控制台 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">系统管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="table.html"><i class="icon-key"></i>角色管理</a></li>
+                            <li><a href="tree.html"><i class="icon-user"></i>用户管理</a></li>
+                            <li><a href="#"><i class="icon-remove"></i>系统错误日志</a></li>
+                            <li><a href="#"><i class="icon-opera"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">签到宝管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="message.html"><i class="icon-envelope"></i>信息中心</a></li>
+                            <li>
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="icon-double-angle-right"></i>
+                                    工作管理
+                                    <b class="arrow icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li><a href="project.html"><i class="icon-edit ylui-title-icon"></i>工作计划</a></li>
+                                    <li><a href="shenpi.html"><i class="icon-check"></i>审批管理</a></li>
+                                    <li><a href="shenqing.html"><i class="icon-edit ylui-title-icon"></i>申请管理</a></li>
+                                    <li><a href="jianbao.html"><i class="icon-file-text" aria-hidden="true"></i>工作简报</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="icon-bar-chart"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-calendar"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-file-o"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-pie-chart"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">考勤管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="banci.html"><i class="icon-pie-char"></i>班次管理</a></li>
+                            <li><a href="kaoqinjl.html"><i class="icon-user"></i>考勤记录</a></li>
+                            <li><a href="kaoqintj.html"><i class="icon-user"></i>考勤统计</a></li>
+                            <li><a href="MonthReport.html"><i class="icon-user"></i>签卡记录管理</a></li>
+                            <li><a href="#"><i class="icon-arrows-alt"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">OA管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-user"></i>员工管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>部门管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>组织结构管理</a></li>
+                            <li><a href="#"><i class="icon-qrcode"></i>考勤管理</a></li>
+                            <li><a href="#"><i class="icon-line-chart"></i>报表分析</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">品牌</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-tachometer"></i>品类管理</a></li>
+                            <li><a href="#"><i class="icon-tachometer"></i>品牌管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.nav-list -->
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li class="active">控制台</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+
+
+                </div>
+
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>首页
+								<small>
+                                    <i class="icon-double-angle-right"></i>
+                                    主页
+                                </small>
+                        </h1>
+                    </div>
+                    <!-- /.page-header -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="alert alert-block alert-success">
+                                  
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <i class="icon-remove"></i>
+                                </button>
+
+                                <i class="icon-ok green"></i>
+
+                                欢迎使用
+								<strong class="green">签到宝管理系统
+                                </strong>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="panel panel-primary">
+                                        <div class="widget-header widget-header-flat widget-header-small ylui-widget-header">
+                                            <h5>
+                                                <i class="icon-signal"></i>
+                                                人员考勤统计
+                                            </h5>
+                                            <div class="widget-toolbar no-border">
+                                                <button class="btn btn-minier btn-info dropdown-toggle" data-toggle="dropdown">
+                                                    本周
+												        <i class="icon-angle-down icon-on-right bigger-110"></i>
+                                                </button>
+
+                                                <ul class="dropdown-menu pull-right dropdown-125 dropdown-lighter dropdown-caret">
+                                                    <li class="active">
+                                                        <a href="#" class="blue">
+                                                            <i class="icon-caret-right bigger-110">&nbsp;</i>
+                                                            本周
+                                                        </a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a href="#">
+                                                            <i class="icon-caret-right bigger-110 invisible">&nbsp;</i>
+                                                            上周
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                              
+                                                <div class="graphic">
+                                                    <div id="main" class="main"></div>
+                                                </div>
+
+                                            </div>
+                                            <!-- /widget-main -->
+                                        </div>
+                                        <!-- /widget-body -->
+                                    </div>
+                                    <!-- /widget-box -->
+                                </div>
+                                <div class="col-sm-6">
+                                     <div class="panel panel-primary">
+                                         <div class="widget-header widget-header-flat widget-header-small ylui-widget-header">
+                                            <h5>
+                                                <i class="icon-user"></i>
+                                                各部门人数
+                                            </h5>
+                                        </div>
+                                         <div class="widget-body ">
+                                               <div class="widget-main">                                           
+                                                   <div class="graphic">
+                                                    <div id="chartwo" class="chartwo"></div>
+                                                  </div>
+                                              </div>
+                                    
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="panel panel-info">
+                                        <div class="widget-header widget-header-flat widget-header-small ylui-widget-header">
+                                            <h5>
+                                                <i class="icon-cloud"></i>
+                                                雅量动态
+                                            </h5>
+                                        </div>
+                                        <div class="panel-body " id="marquee6">
+                                            <ul >
+                                                <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li>
+                                                    <a href="#">
+                                                        客流统计对购物中心的作用<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="panel panel-primary">
+                                        <div class="widget-header widget-header-flat widget-header-small ylui-widget-header">
+                                            <h5>
+                                                <i class="icon-cloud-download"></i>
+                                                相关下载
+                                            </h5>
+                                        </div>
+                                        <div class="panel-body ylkui-panel-body ">
+                                            <ul class="news-list ylui-news-list">
+                                                <li >
+                                                    <a href="#">
+                                                        人员信息表<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                <li >
+                                                    <a href="#">
+                                                        人员信息表<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li >
+                                                    <a href="#">
+                                                        人员信息表<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                <li >
+                                                    <a href="#">
+                                                        人员信息表<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li >
+                                                    <a href="#">
+                                                        人员信息表<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                <li >
+                                                    <a href="#">
+                                                        人员信息表<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                                 <li >
+                                                    <a href="#">
+                                                        人员信息表<span class="pull-right ylui-pull-right">2016-10-10</span>
+                                                    </a>
+                                                </li>
+                                               
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    
+
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+
+
+        </div>
+        <!-- /.main-container-inner -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <!-- /.main-container -->
+
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead-bs2.min.js"></script>
+    <script src="char/echarts.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+    <script src="slider/Marquee.js"></script>
+
+
+   
+
+    <script type="text/javascript">
+        $(function () {
+            $('#marquee6').kxbdSuperMarquee({
+                isMarquee: true,
+                isEqual: false,
+                scrollDelay: 30,
+                controlBtn: { up: '#goUM', down: '#goDM' },
+                direction: 'up'
+            });
+        });
+
+        var oldie = /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase());
+        $('.easy-pie-chart.percentage').each(function () {
+            $(this).easyPieChart({
+                barColor: $(this).data('color'),
+                trackColor: '#EEEEEE',
+                scaleColor: false,
+                lineCap: 'butt',
+                lineWidth: 8,
+                animate: oldie ? false : 1000,
+                size: 75
+            }).css('color', $(this).data('color'));
+        });
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+
+        // 使用
+        require(
+                [
+                    'echarts',
+                     'echarts/chart/line',//折线图
+                     'echarts/chart/pie',//饼状图
+                    'echarts/chart/funnel',//漏斗图
+                    'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+                var idx = 1;
+                var option = {
+                    timeline: {
+                        data: [
+                              '2016-01-01', '2016-02-01', '2016-03-01', '2016-04-01', '2016-05-01',
+                             { name: '2016-06-01', symbol: 'emptyStar6', symbolSize: 8 },
+                             '2016-07-01', '2016-08-01', '2016-09-01', '2016-10-01', '2016-11-01',
+                             { name: '2016-12-01', symbol: 'star6', symbolSize: 8 }
+                        ],
+                        label: {
+                            formatter: function (s) {
+                                return s.slice(0, 7);
+                            }
+                        }
+                    },
+                    options: [
+                       {
+                          
+                           tooltip: {  //提示框，鼠标悬浮交互时的信息提示
+                               trigger: 'item',
+                               formatter: "{a} <br/>{b} : {c} ({d}%)"
+                           },
+                           legend: {   //图例，每个图表最多仅有一个图例
+                               orient: 'vertical',
+                               x: 'left',
+                               data: ['正常', '迟到', '旷工', '早退']
+                           },
+                           toolbox: {  //工具箱，每个图表最多仅有一个工具箱
+                               show: true,
+                               x: 'right',
+                               feature: {
+                                   mark: { show: true },
+                                   dataView: { show: true, readOnly: false },
+                                   magicType: {
+                                       show: true,
+                                       type: ['pie', 'funnel'],
+                                       option: {
+                                           funnel: {
+                                               x: '25%',
+                                               width: '50%',
+                                               funnelAlign: 'left',
+                                               max: 1548
+                                           }
+                                       }
+                                   },
+                                   restore: { show: true },
+                                   saveAsImage: { show: true }
+                               }
+                           },
+                           series: [
+                               {
+                                   name: '访问来源',
+                                   type: 'pie',
+                                   radius: '55%',
+                                   center: ['50%', '50%'],
+                                   data: [
+                                       { value: 335, name: '正常' },
+                                       { value: 310, name: '迟到' },
+                                       { value: 234, name: '旷工' },
+                                       { value: 135, name: '早退' }
+                                   ]
+                               }
+                           ]
+                       },
+
+                    ]
+                };
+                // 为echarts对象加载数据 
+                myChart.setOption(option);
+            }
+       
+
+        );
+        require(
+                   [
+                       'echarts',
+                        'echarts/chart/line',
+                         'echarts/chart/pie',
+                         'echarts/chart/funnel',
+                       'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                   ],
+                   function (ec) {
+                       // 基于准备好的dom，初始化echarts图表
+                       var myChart = ec.init(document.getElementById('chartwo'));
+                       
+
+                       var option = {
+                           tooltip: {
+                               trigger: 'item'
+                           },
+                           toolbox: {
+                               show: true,
+                               feature: {
+                                   dataView: { show: true, readOnly: false },
+                                   restore: { show: true },
+                                   saveAsImage: { show: true }
+                               }
+                           },
+                           calculable: true,
+                           grid: {
+                               borderWidth: 0,
+                               y: 80,
+                               y2: 60
+                           },
+                           xAxis: [
+                               {
+                                   type: 'category',
+                              
+                                   data: ['市场部', '研发部', '业务部', '财务部', '人事部', '运营部', '设计部', '外贸部', '内贸部']
+                               }
+                           ],
+                           yAxis: [
+                               {
+                                   type: 'value',
+                                  
+                               }
+                           ],
+                           series: [
+                               {
+                                   name: '各部门人数',
+                                   type: 'bar',
+                                   itemStyle: {
+                                       normal: {
+                                           color: function (params) {
+                                               // build a color map as your need.
+                                               var colorList = [
+                                                 '#C1232B', '#B5C334', '#FCCE10', '#162ddb', '#bc0dcf',
+                                                  '#FE8463', '#0bf129', '#09dfeb', '#F3A43B'
+                                               ];
+                                               return colorList[params.dataIndex]
+                                           },
+                                           label: {
+                                               show: true,
+                                               position: 'top',
+                                               formatter: '{b}\n{c}'
+                                           }
+                                       }
+                                   },
+                                   data: [32, 21, 10, 4, 12, 5, 6, 5, 25, 23, 7],
+                                   markPoint: {
+                                       tooltip: {
+                                           trigger: 'item',
+                                           backgroundColor: 'rgba(0,0,0,0)',
+                                           formatter: function (params) {
+                                               return ;
+                                           }
+                                       },
+                                       data: [
+                                           { xAxis: 0, y: 350, name: '市场部', symbolSize: 0 },
+                                           { xAxis: 1, y: 350, name: '研发部', symbolSize: 0 },
+                                           { xAxis: 2, y: 350, name: '业务部', symbolSize: 0 },
+                                           { xAxis: 3, y: 350, name: '财务部', symbolSize: 0 },
+                                           { xAxis: 4, y: 350, name: '人事部', symbolSize: 0 },
+                                           { xAxis: 5, y: 350, name: '运营部', symbolSize: 0 },
+                                           { xAxis: 6, y: 350, name: '设计部', symbolSize: 0 },
+                                           { xAxis: 7, y: 350, name: '外贸部', symbolSize: 0 },
+                                           { xAxis: 8, y: 350, name: '内贸部', symbolSize: 0 }
+
+                                       ]
+                                   }
+                               }
+                           ]
+                       };
+
+                       // 为echarts对象加载数据 
+                       myChart.setOption(option);
+                   }
+               );
+ 
+    </script>
+
+</body>
+</html>

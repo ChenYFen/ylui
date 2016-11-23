@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>签卡记录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/jquery-ui-1.10.3.full.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ace.min.css" />
+    <link rel="stylesheet" href="css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="css/ace-skins.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="css/style-two.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .qiandao-time { float: left; }
+            .qiandao-time h3 { padding: 0; margin: 0 8px; font-weight: lighter; color: #2679b5; }
+        .table td {
+            vertical-align:middle!important;
+        }
+        .ylui-th-checkbox { 
+            width:60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="index.html" class="navbar-brand">
+                    <small>
+                        <i class="icon-cloud"></i>
+                        客户分析云
+                    </small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle ylui-nav-right">
+                            <img class="nav-user-photo" src="images/default_user.jpg" alt="头像" />
+                            <span class="user-info">
+                                <small>admin,欢迎您回来</small>
+                                <small id="localtime">2015-11-26 13：42 星期一</small>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class=" icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="3">
+                                    <i class="icon-edit"></i>
+                                    修改密码
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="logout" href="javascript:void(0);" url="/Account/Auth/Logout">
+                                    <i class="icon-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="light-blue">
+                        <a class="logout ylui-nav-right" href="javascript:void(0);" url="/Account/Auth/Logout">
+                            <i class="icon-off"></i>
+                            注销
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+                        <span class="btn btn-info"></span>
+                        <span class="btn btn-warning"></span>
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+                <ul class="nav nav-list">
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">控制台 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">系统管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="table.html"><i class="icon-key"></i>角色管理</a></li>
+                            <li><a href="tree.html"><i class="icon-user"></i>用户管理</a></li>
+                            <li><a href="#"><i class="icon-remove"></i>系统错误日志</a></li>
+                            <li><a href="#"><i class="icon-opera"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">签到宝管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="message.html"><i class="icon-envelope"></i>信息中心</a></li>
+                            <li>
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="icon-double-angle-right"></i>
+                                    工作管理
+                                    <b class="arrow icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li><a href="project.html"><i class="icon-edit ylui-title-icon"></i>工作计划</a></li>
+                                    <li><a href="shenpi.html"><i class="icon-check"></i>审批管理</a></li>
+                                    <li><a href="shenqing.html"><i class="icon-edit ylui-title-icon"></i>申请管理</a></li>
+                                    <li><a href="jianbao.html"><i class="icon-file-text" aria-hidden="true"></i>工作简报</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="icon-bar-chart"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-calendar"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-file-o"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-pie-chart"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">考勤管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="banci.html"><i class="icon-pie-char"></i>班次管理</a></li>
+                            <li><a href="kaoqinjl.html"><i class="icon-user"></i>考勤记录</a></li>
+                            <li><a href="kaoqintj.html"><i class="icon-user"></i>考勤统计</a></li>
+                            <li><a href="#"><i class="icon-user"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-arrows-alt"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">OA管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-user"></i>员工管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>部门管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>组织结构管理</a></li>
+                            <li><a href="#"><i class="icon-qrcode"></i>考勤管理</a></li>
+                            <li><a href="#"><i class="icon-line-chart"></i>报表分析</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">品牌</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-tachometer"></i>品类管理</a></li>
+                            <li><a href="#"><i class="icon-tachometer"></i>品牌管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.nav-list -->
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li>考勤管理</li>
+                        <li class="active">签卡记录管理</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>考勤管理
+								<small>
+                                    <i class="icon-double-angle-right"></i>
+                                    签卡记录管理
+                                </small>
+                        </h1>
+                    </div>
+                    <!-- /.page-header -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="qiandao-time">
+                                <h3>签卡月份： 2016-10</h3>
+                            </div>
+                            <div class="ylui-searchbtn">                             
+                                <div class="btn-group ylui-btn-group">
+                                    <input type="search" placeholder="请输入关键字" />
+                                    <div class="btn-group ylui-btn-group">
+                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle">
+                                            部门
+										   <span class="icon-caret-down icon-on-right"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">财务 </a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">研发 </a></li>
+                                            <li><a href="#">销售 </a></li>
+                                        </ul>
+                                    </div>
+
+                                    <button class="btn btn-primary " type="submit">查询 <i class="icon-search"></i></button>
+                                </div>
+                                <a href="#" class="btn btn-primary"><i class="icon-external-link"></i>导出到Excel</a>
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <div id="tabs">
+                                    <ul>
+                                        <li>
+                                            <a href="#tabs-1">月视图 </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#tabs-2">日视图</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#tabs-3">列表视图</a>
+                                        </li>
+                                        <li style="margin-left: 20px;">
+                                            <a href="#tabs-4">云签到记录</a>
+                                        </li>
+                                    </ul>
+
+                                    <div id="tabs-1">
+                                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>工号</th>
+                                                    <th>姓名</th>
+                                                    <th>01</th>
+                                                    <th>02 </th>
+                                                    <th>03</th>
+                                                    <th>04</th>
+                                                    <th>05</th>
+                                                    <th>06 </th>
+                                                    <th>07</th>
+                                                    <th>08</th>
+                                                    <th>09</th>
+                                                    <th>10</th>
+                                                    <th>11</th>
+                                                    <th>12</th>
+                                                    <th>13</th>
+                                                    <th>14</th>
+                                                    <th>15</th>
+                                                    <th>16</th>
+                                                    <th>17</th>
+                                                    <th>18</th>
+                                                    <th>19</th>
+                                                    <th>20</th>
+                                                    <th>21</th>
+                                                    <th>22</th>
+                                                    <th>23</th>
+                                                    <th>24</th>
+                                                    <th>25</th>
+                                                    <th>26</th>
+                                                    <th>27</th>
+                                                    <th>28</th>
+                                                    <th>29</th>
+                                                    <th>30</th>
+                                                    <th>31</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ylui-table-tbody">
+                                                <tr>
+                                                    <td>001</td>
+                                                    <td>陈</td>
+                                                    <td>09:00 12:00 12:01 17:30</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>002</td>
+                                                    <td>陈</td>
+                                                    <td>09:00 12:00 12:01 17:30</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+                                                    <td>08:50 12:05 12:05 18:00</td>
+
+                                                </tr>
+
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div id="tabs-2">
+                                        <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>工号</th>
+                                                    <th>姓名</th>                                                   
+                                                    <th>签卡日期</th>
+                                                    <th>星期 </th>
+                                                    <th>签卡1</th>
+                                                    <th>签卡2</th>
+                                                    <th>签卡3</th>
+                                                    <th>签卡4</th>
+                                                    <th>签卡5</th>
+                                                    <th>签卡6</th>
+                                                    <th>签卡7</th>
+                                                    <th>签卡8</th>
+                                                    <th>签卡9</th>
+                                                    <th>签卡10</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ylui-table-tbody">
+                                                <tr>
+                                                    <td>001</td>
+                                                    <td>林</td>
+                                                    <td>2016-10-26 </td>
+                                                    <td>星期三</td>
+                                                    <td>09:00</td>
+                                                    <td>12:01</td>
+                                                    <td>12:02</td>
+                                                    <td>17:50</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div id="tabs-3">
+                                        <table id="sample-table-3" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="ylui-th-checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="ace" />
+                                                            <span class="lbl"></span>
+                                                        </label>
+                                                    </th>
+                                                    <th>工号</th>
+                                                    <th>姓名</th>
+                                                    <th>卡号</th>
+                                                    <th>打卡时间</th>
+                                                    <th>打卡类型 </th>
+                                                    <th>设备名称</th>
+                                                    <th>备注</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ylui-table-tbody">
+                                                <tr>
+                                                     <td class="ylui-th-checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="ace" />
+                                                            <span class="lbl"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>001</td>
+                                                    <td>陈</td>
+                                                    <td>111</td>
+                                                    <td>2016-10-26 12:01</td>
+                                                    <td>云考勤</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div id="tabs-4">
+                                        <table id="sample-table-4" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="ylui-th-checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="ace" />
+                                                            <span class="lbl"></span>
+                                                        </label>
+                                                    </th>
+                                                    <th>打卡编号</th>
+                                                    <th>员工工号</th>
+                                                    <th>员工姓名</th>
+                                                    <th>打卡时间</th>
+                                                    <th>打卡类型 </th>
+                                                    <th>签到地址</th>
+                                                    <th>备注</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ylui-table-tbody">
+                                                <tr>
+                                                     <td class="ylui-th-checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="ace" />
+                                                            <span class="lbl"></span>
+                                                        </label>
+                                                    </td>
+                                                    <td>1</td>
+                                                    <td>001</td>
+                                                    <td>陈</td>
+                                                    <td>2016-10-26 12:01</td>
+                                                    <td>云考勤</td>
+                                                    <td>广东省广州市白云区广超街5号</td>
+                                                    <td></td>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <!--/tabs-->
+
+                            </div>
+                            <!--/table-responsive-->
+
+
+                        </div>
+
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.page-content -->
+
+            </div>
+            <!-- /.main-content -->
+
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.main-container -->
+
+
+
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/jquery.dataTables.bootstrap.js"></script>
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+    <script src="js/mycontrol.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#tabs").tabs();
+
+            var oTable1 = $('#sample-table-1').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+
+                ]
+            });
+            var oTable1 = $('#sample-table-2').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+                ]
+            });
+            var oTable1 = $('#sample-table-3').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+                ]
+            });
+            var oTable1 = $('#sample-table-4').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+                ]
+            });
+            $('table th input:checkbox').on('click', function () {
+                var that = this;
+                $(this).closest('table').find('tr > td:first-child input:checkbox')
+                .each(function () {
+                    this.checked = that.checked;
+                    $(this).closest('tr').toggleClass('selected');
+                });
+
+            });
+        })
+    </script>
+
+</body>
+</html>

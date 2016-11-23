@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>签卡记录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/jquery-ui-1.10.3.full.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ace.min.css" />
+    <link rel="stylesheet" href="css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="css/ace-skins.min.css" />
+
+    <link href="/easyui/demo.css" rel="stylesheet" />
+    <link href="/easyui/easyui.css" rel="stylesheet" />
+
+    <link href="css/style-daka.css" rel="stylesheet" />
+    <style type="text/css">
+        .panel-body { border-top: 1px solid #95B8E7; }
+        .panel-header { display: none; }
+        table td, table th { text-align: center; vertical-align: middle; height: 36px; }
+        table td { word-wrap: break-word; word-break: break-all; }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="index.html" class="navbar-brand">
+                    <small>
+                        <i class="icon-cloud"></i>
+                        客户分析云
+                    </small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle ylui-nav-right">
+                            <img class="nav-user-photo" src="images/default_user.jpg" alt="头像" />
+                            <span class="user-info">
+                                <small>admin,欢迎您回来</small>
+                                <small id="localtime">2015-11-26 13：42 星期一</small>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class=" icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="3">
+                                    <i class="icon-edit"></i>
+                                    修改密码
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="logout" href="javascript:void(0);" url="/Account/Auth/Logout">
+                                    <i class="icon-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="light-blue">
+                        <a class="logout ylui-nav-right" href="javascript:void(0);" url="/Account/Auth/Logout">
+                            <i class="icon-off"></i>
+                            注销
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+                        <span class="btn btn-info"></span>
+                        <span class="btn btn-warning"></span>
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+                <ul class="nav nav-list">
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">控制台 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">系统管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="table.html"><i class="icon-key"></i>角色管理</a></li>
+                            <li><a href="tree.html"><i class="icon-user"></i>用户管理</a></li>
+                            <li><a href="#"><i class="icon-remove"></i>系统错误日志</a></li>
+                            <li><a href="#"><i class="icon-opera"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">签到宝管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="message.html"><i class="icon-envelope"></i>信息中心</a></li>
+                            <li>
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="icon-double-angle-right"></i>
+                                    工作管理
+                                    <b class="arrow icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li><a href="project.html"><i class="icon-edit ylui-title-icon"></i>工作计划</a></li>
+                                    <li><a href="shenpi.html"><i class="icon-check"></i>审批管理</a></li>
+                                    <li><a href="shenqing.html"><i class="icon-edit ylui-title-icon"></i>申请管理</a></li>
+                                    <li><a href="jianbao.html"><i class="icon-file-text" aria-hidden="true"></i>工作简报</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="icon-bar-chart"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-calendar"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-file-o"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-pie-chart"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">考勤管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="banci.html"><i class="icon-pie-char"></i>班次管理</a></li>
+                            <li><a href="kaoqinjl.html"><i class="icon-user"></i>考勤记录</a></li>
+                            <li><a href="kaoqintj.html"><i class="icon-user"></i>考勤统计</a></li>
+                            <li><a href="MonthReport.html"><i class="icon-user"></i>签卡记录管理</a></li>
+                            <li><a href="#"><i class="icon-arrows-alt"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">OA管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-user"></i>员工管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>部门管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>组织结构管理</a></li>
+                            <li><a href="#"><i class="icon-qrcode"></i>考勤管理</a></li>
+                            <li><a href="#"><i class="icon-line-chart"></i>报表分析</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">品牌</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-tachometer"></i>品类管理</a></li>
+                            <li><a href="#"><i class="icon-tachometer"></i>品牌管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.nav-list -->
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li>考勤管理</li>
+                        <li class="active">签卡记录管理</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>签卡月份： 2016-10</h1>
+                    </div>
+                    <!-- /.page-header -->
+
+                    <div class="ylui-searchbtn">
+                        <div class="btn-group ylui-btn-group">
+                            <input type="text" placeholder="请输入关键字" />
+                            <div class="yui-bumen">
+                                <textarea class="txtValue" id='txtDepartmentID' placeholder="请选择部门" onclick='$("#hidePanel1").click()'></textarea>
+                                <a href="javascript:void(0)" class="showPanel" id="hidePanel1" style="display: none;">
+                                    <div class="bumen-box">
+                                        <div class="box-header">
+                                            <h4>按部门选择</h4>
+                                        </div>
+                                        <div class="bumenbox-body">
+                                            <div class="checkbox ylui-checkbox">
+                                                <label>
+                                                    <input name="form-field-checkbox" type="checkbox" class="ace" data-type="checkall">
+                                                    <span class="lbl">全选</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox ylui-checkbox">
+                                                <label>
+                                                    <input name="form-field-checkbox" type="checkbox" class="ace" data-type="checkbox" data-value="研发部">
+                                                    <span class="lbl">研发部</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox ylui-checkbox">
+                                                <label>
+                                                    <input name="form-field-checkbox" type="checkbox" class="ace" data-type="checkbox" data-value="销售部">
+                                                    <span class="lbl">销售部</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox ylui-checkbox">
+                                                <label>
+                                                    <input name="form-field-checkbox" type="checkbox" class="ace" data-type="checkbox" data-value="业务部">
+                                                    <span class="lbl">业务部</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox ylui-checkbox">
+                                                <label>
+                                                    <input name="form-field-checkbox" type="checkbox" class="ace" data-type="checkbox" data-value="财务部">
+                                                    <span class="lbl">财务部</span>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <select data-current="2016-10">
+                                <option value="">--考勤月份--</option>
+                                <option value="2016-10">2016-10</option>
+                                <option value="2016-09">2016-09</option>
+                                <option value="">其它月份...</option>
+                            </select>
+
+                            <button class="btn btn-primary btn-sm " type="button">查询 <i class="icon-search"></i></button>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="kq-btn">
+                                <a href="#" class="btn btn-primary" style="margin-left: 3px;"><i class="icon-external-link"></i>导出到Excel</a>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs" id="myTab">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#month">月视图 
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="DailyReport.html">日视图
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="AttRecord.html">列表视图
+                                        </a>
+                                    </li>
+                                    <li style="margin-left: 20px;">
+                                        <a href="YunRecord.html">云签到记录
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div id="month" class="tab-pane in active">
+                                        <table class="easyui-datagrid" id="table-txt" title="Frozen Columns in DataGrid" style="width: 100%; height: 250px" data-options="singleSelect:true,url:'datagrid_data1.json',method:'get'">
+                                            <thead data-options="frozen:true">
+                                                <tr>
+                                                    <th data-options="field:'itemid',width:90,height:65">工号</th>
+                                                    <th data-options="field:'productid',width:90">姓名</th>
+                                                </tr>
+                                            </thead>
+                                            <thead>
+                                                <tr>
+                                                    <th data-options="field:'1',width:90">01</th>
+                                                    <th data-options="field:'2',width:90">02</th>
+                                                    <th data-options="field:'3',width:90">03</th>
+                                                    <th data-options="field:'4',width:90">04</th>
+                                                    <th data-options="field:'5',width:90">05</th>
+                                                    <th data-options="field:'6',width:90">06</th>
+                                                    <th data-options="field:'7',width:90">07</th>
+                                                    <th data-options="field:'8',width:90">08</th>
+                                                    <th data-options="field:'9',width:90">09</th>
+                                                    <th data-options="field:'10',width:90">10</th>
+                                                    <th data-options="field:'11',width:90">11</th>
+                                                    <th data-options="field:'12',width:90">12</th>
+                                                    <th data-options="field:'13',width:90">13</th>
+                                                    <th data-options="field:'14',width:90">14</th>
+                                                    <th data-options="field:'15',width:90">15</th>
+                                                    <th data-options="field:'16',width:90">16</th>
+                                                    <th data-options="field:'17',width:90">17</th>
+                                                    <th data-options="field:'18',width:90">18</th>
+                                                    <th data-options="field:'19',width:90">19</th>
+                                                    <th data-options="field:'20',width:90">20</th>
+                                                    <th data-options="field:'21',width:90">21</th>
+                                                    <th data-options="field:'22',width:90">22</th>
+                                                    <th data-options="field:'23',width:90">23</th>
+                                                    <th data-options="field:'24',width:90">24</th>
+                                                    <th data-options="field:'25',width:90">25</th>
+                                                    <th data-options="field:'26',width:90">26</th>
+                                                    <th data-options="field:'27',width:90">27</th>
+                                                    <th data-options="field:'28',width:90">28</th>
+                                                    <th data-options="field:'29',width:90">29</th>
+                                                    <th data-options="field:'30',width:90">30</th>
+                                                    <th data-options="field:'31',width:90">31</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.page-content -->
+
+            </div>
+            <!-- /.main-content -->
+
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.main-container -->
+
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/jquery.dataTables.bootstrap.js"></script>
+    <script src="js/bootbox.min.js"></script>
+
+
+    <script src="easyui/jquery.easyui.min.js"></script>
+
+
+    <script src="js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+    <script src="js/mycontrol.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#hidePanel1").click(function () {
+                $(this).show();
+                $(this).focus();
+            });
+            $("#hidePanel1").blur(function () {
+                $(this).hide();
+            });
+            $("#hidePanel1").hide();
+
+
+
+            $('[data-type="checkbox"]').click(function () {
+                var data_value = $(this).attr('data-value'),//attr() 方法设置或返回被选元素的属性值。    3.其他则使用attr();
+                txtalso = $.trim($(".txtValue").val());
+                if ($(this).prop("checked")) {    //prop()获取在匹配的元素集中的第一个元素的属性值。   1.添加属性名称该属性就会生效应该使用prop(); 2.是有true,false两个属性使用prop();   
+                    if (txtalso.length > 0) {
+                        if (txtalso.indexOf(data_value + ',') != -1) {
+                            return;
+                        } else {
+                            txtalso += data_value + ',';
+                        }
+                    } else {
+                        txtalso = data_value + ',';
+                    }
+                } else {
+                    if (txtalso.indexOf(data_value + ',') != -1) {
+                        txtalso = txtalso.replace(data_value + ',', '');
+                    }
+                }
+                $(".txtValue").val(txtalso);
+            });
+            $('[data-type="checkall"]').click(function () {
+                var str = '';
+                if ($(this).prop("checked")) {
+                    $.each($('[data-type="checkbox"]'), function (i) {
+                        str += $(this).attr('data-value') + ',';
+                    });
+                    $('[data-type="checkbox"]').prop('checked', true);
+                } else {
+                    $('[data-type="checkbox"]').prop('checked', false);
+                }
+                $(".txtValue").val(str);
+            });
+
+        })
+
+
+    </script>
+
+</body>
+</html>

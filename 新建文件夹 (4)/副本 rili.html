@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>考勤统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+    <style type="text/css">
+        .fc-event { border: 0; background-color: transparent; }
+    </style>
+</head>
+
+<body>
+
+
+    <input id="monthYear" />
+  
+
+
+<script>
+$(function() {
+	$("#monthYear").attr("readonly", "true");
+	var month ;
+	var year ;
+	$('#monthYear').datepicker({
+		 changeMonth : true,
+		 changeYear : true,
+		 dateFormat : 'mm/yy',
+                 showButtonPanel: true,
+                 onClose: function(dateText, inst) {   
+			month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+			year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();		      	 
+         }  
+     
+     	});
+	//“Done”按钮的click事件
+	$(".ui-datepicker-close").live("click", function ()
+	 {
+		 $('#monthYear').datepicker("setDate", new Date(year, month, 1)); 
+	 });
+         
+         //点击互动的清除输入框
+	 $("#monthYear").toggle(function() {
+			$(this).val("");
+		}, function() {
+			$(this).val("");
+	});
+});
+
+</script>
+
+</body>
+</html>

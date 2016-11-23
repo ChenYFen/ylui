@@ -1,0 +1,55 @@
+/* CSS Document */
+
+/*index*/
+#navbar
+	 {
+	   background-color:#428bca;
+	 }
+	 .ace-nav>li.light-blue>.ylui-nav-right
+	 {
+	     background-color:#428bca;
+	 }
+	
+     /*table*/
+       .ylui-btn,.ylui-search,.ylui-rili { 
+             
+          padding:5px 4px 2px 0;
+       }
+       .ylui-tablesearch { 
+          float:right;
+        }
+     .dataTables_wrapper .row:first-child { 
+         display:none;
+     }
+
+  
+  .dataTables_info { 
+    display:none;
+   }
+.ylui-table-tbody { 
+    text-align:center;
+}
+th { 
+    text-align:center;
+    width:120px;
+}
+.ui-datepicker { 
+    width: 18em;
+}
+
+  /*edit*/
+  .ylui-box-footer-button {
+    position:absolute;
+    left: 40%;
+ }
+.ylui-box-footer { 
+    padding:20px 0;
+}
+.ylui-footer-btn { 
+    margin-left:20px;
+}
+.ylui-form-group-radio, .ylui-form-group-checkbox { 
+    display: inline-block;
+
+}
+

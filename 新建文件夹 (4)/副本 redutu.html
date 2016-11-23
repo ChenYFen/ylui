@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>热度图</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/ace.min.css" rel="stylesheet" />
+    <link href="range/range-picker.css" rel="stylesheet" />
+    <!-- <link href="css/jquery.range.css" rel="stylesheet" />-->
+
+    <style type="text/css">
+        body { background-color: #fff; }
+        .st-btn { text-align: center; padding: 6px 0;  }
+        .rdt { width: 100%; height: 100%; margin-top: 5px; background-color:#000; }
+        .rdt-images { /*background-color: #000; height: 100%; margin: 10px; */ padding: 0px; text-align: center; margin-bottom: 7px; }
+            .rdt-images img { max-width: 100%; }
+        .rd { float: right;  margin-top: -188px;
+    margin-right: 10px; }
+        /*.demo { width: 600px; margin: 3px auto 0 auto; }
+        .theme-green .scale ins { color: #000; }
+        .slider-container .scale ins { position: relative; margin-left: -13px; }*/
+
+
+       
+       
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="widget-box-overlay"></div>
+        <div style="z-index: 999; position: fixed; width: 100%;">
+            <div class="st-btn">
+                <button class="btn btn-primary">日报视图</button>
+                <button class="btn btn-info">周报视图</button>
+                <button class="btn btn-success ">月报视图</button>
+
+                <select id="bili" style="width: 90px; height: 42px; padding: 7px 17px; padding-top: 0px; font-size: 2rem;">
+                    <option value="1" style="height: 50px;">1*1</option>
+                    <option value="43" selected="selected">4*3</option>
+                </select>
+
+            </div>
+
+            <div class="rdt">
+                <div class="rdt-images" style="background-image: url(images/images.png); background-position: center; background-repeat: no-repeat; background-attachment: scroll; background-size: 75% 100%;">
+                    <!--<img src="images/picture.jpg" />-->
+                </div>
+                <div class="rd">
+                    <p>高</p>
+                    <span>
+                        <img src="images/heatmaptip.gif" alt="空间密度图例" />
+                    </span>
+                    <p>低</p>
+                </div>
+
+            </div>
+
+
+            <!--            <div id="main">
+                <div class="demo">
+                    <input type="hidden" class="single-slider" value="10" />
+                </div>
+            </div>-->
+
+
+
+            <div class="wrapper"  style=" width: 80%; margin: 7px auto;">
+                <div id="date_range"></div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- /.row -->
+
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead-bs2.min.js"></script>
+   <!-- <script src="js/jquery-ui-1.10.3.full.min.js"></script>-->
+    <script src="range/range_picker.js"></script>
+  <!--<script src="js/jquery.range.js"></script>-->
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+    <script>
+        $(function () {
+            resetbg();
+            $(window).resize(function () {
+                resetbg();
+            });
+
+            $('#bili').change(function () {
+                setbl();
+            });
+
+            ////时间轴滑块
+            //$('.single-slider').jRange({
+            //    from: 1,
+            //    to: 12,
+            //    step: 1,
+            //    scale: [1 + "月", 2 + "月", 3 + "月", 4 + "月", 5 + "月", 6 + "月", 7 + "月", 8 + "月", 9 + "月", 10 + "月", 11 + "月", 12 + "月"],
+            //    format: '%s',
+            //    width: 500,
+            //    showLabels: true,
+            //    showScale: true
+            //});
+
+
+         
+            "use strict";
+            function dateFormat(date, fmt) {
+                var o = {
+                    "M+": date.getMonth() + 1,
+                    "d+": date.getDate(),
+                };
+                if (/(y+)/.test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+                }
+                for (var k in o) {
+                    if (new RegExp("(" + k + ")").test(fmt)) {
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                    }
+                }
+                return fmt;
+            }
+
+            var startDate = new Date("2016/01/01"),               
+                endDate = new Date("2016/12/31"),
+                offset = endDate - startDate;
+            var d1 = $("#date_range").rangepicker({               
+                startValue: dateFormat(startDate, "yyyy/MM/dd"),
+                endValue: dateFormat(endDate, "yyyy/MM/dd"),
+                translateSelectLabel: function (currentPosition, totalPosition) {
+                    var timeOffset = offset * (currentPosition / totalPosition);
+                    var date = new Date(+startDate + parseInt(timeOffset));
+                    return dateFormat(date, "yyyy/MM/dd");
+                }
+            });
+            var result = d1.getSelectValue();
+            console.info(result);
+            window.hello = $("#double_date_range").rangepicker({
+                type: "double",
+                
+                startValue: dateFormat(startDate, "yyyy/MM/dd"),
+                endValue: dateFormat(endDate, "yyyy/MM/dd"),              
+                translateSelectLabel: function (currentPosition, totalPosition) {
+                    var timeOffset = offset * (currentPosition / totalPosition);
+                    var date = new Date(+startDate + parseInt(timeOffset));
+                    return dateFormat(date, "yyyy/MM/dd");
+                }
+            });
+            console.info(hello.getSelectValue());
+
+        });
+
+        function resetbg() {
+            var dh = $(document).height();
+            var headh = $('.st-btn').outerHeight();
+            var h = dh - headh - 50;
+            var w = h * 4 / 3;
+
+            setbl();
+            $('.rdt-images').css({ height: h });
+        }
+        function setbl() {
+            var dh = $(document).height();
+            var headh = $('.st-btn').outerHeight();
+            var h = dh - headh - 50;
+            var bl = $('#bili').val();
+            if (bl == '43') {
+                $('.rdt-images').css({ 'background-size': '75% 100%' });
+            }
+            else if (bl == '1') {
+                $('.rdt-images').css({ 'background-size': h + 'px ' + h + 'px' });
+            }
+        }
+
+    </script>
+
+</body>
+</html>

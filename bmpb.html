@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>部门排班管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/jquery-ui-1.10.3.full.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ace.min.css" />
+    <link rel="stylesheet" href="css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="css/ace-skins.min.css" />
+    <style type="text/css">
+        .table-bordered { border: none!important; }
+        .closeTree { background: url(images/tree_close.gif) no-repeat center center; width: 16px; height: 16px; float: left; }
+        .openTree { background: url(images/tree_open.gif) no-repeat center center; width: 16px; height: 16px; float: left; }
+        .name { color: red; text-align: center; line-height: 147px; vertical-align: middle; }
+        .modal-header { font-size: 18px; }
+        .ylui-title-span { padding: 0 8px; }
+        .messages { text-align: center; }
+        .modal-content { margin-top: 50%; max-width: 500px; }
+        .widget-box ,.widget-body { 
+            padding:0 13px;
+            margin:0;
+            border:none;
+        }
+      
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="index.html" class="navbar-brand">
+                    <small>
+                        <i class="icon-cloud"></i>
+                        客户分析云
+                    </small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle ylui-nav-right">
+                            <img class="nav-user-photo" src="images/default_user.jpg" alt="头像" />
+                            <span class="user-info">
+                                <small>admin,欢迎您回来</small>
+                                <small id="localtime">2015-11-26 13：42 星期一</small>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class=" icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="3">
+                                    <i class="icon-edit"></i>
+                                    修改密码
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="logout" href="javascript:void(0);" url="/Account/Auth/Logout">
+                                    <i class="icon-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="light-blue">
+                        <a class="logout ylui-nav-right" href="javascript:void(0);" url="/Account/Auth/Logout">
+                            <i class="icon-off"></i>
+                            注销
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+                        <span class="btn btn-info"></span>
+                        <span class="btn btn-warning"></span>
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+                <ul class="nav nav-list">
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">控制台 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">系统管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="table.html"><i class="icon-key"></i>角色管理</a></li>
+                            <li><a href="tree.html"><i class="icon-user"></i>用户管理</a></li>
+                            <li><a href="#"><i class="icon-remove"></i>系统错误日志</a></li>
+                            <li><a href="#"><i class="icon-opera"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">签到宝管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="message.html"><i class="icon-envelope"></i>信息中心</a></li>
+                            <li>
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="icon-double-angle-right"></i>
+                                    工作管理
+                                    <b class="arrow icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li><a href="project.html"><i class="icon-edit ylui-title-icon"></i>工作计划</a></li>
+                                    <li><a href="shenpi.html"><i class="icon-check"></i>审批管理</a></li>
+                                    <li><a href="shenqing.html"><i class="icon-edit ylui-title-icon"></i>申请管理</a></li>
+                                    <li><a href="jianbao.html"><i class="icon-file-text" aria-hidden="true"></i>工作简报</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="icon-bar-chart"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-calendar"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-file-o"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-pie-chart"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">考勤管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="banci.html"><i class="icon-pie-char"></i>班次管理</a></li>
+                            <li><a href="kaoqinjl.html"><i class="icon-user"></i>考勤记录</a></li>
+                            <li><a href="kaoqintj.html"><i class="icon-user"></i>考勤统计</a></li>
+                            <li><a href="MonthReport.html"><i class="icon-user"></i>签卡记录管理</a></li>
+                            <li><a href="ygpb.html"><i class="icon-arrows-alt"></i>人员排班管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">OA管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-user"></i>员工管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>部门管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>组织结构管理</a></li>
+                            <li><a href="#"><i class="icon-qrcode"></i>考勤管理</a></li>
+                            <li><a href="#"><i class="icon-line-chart"></i>报表分析</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">品牌</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-tachometer"></i>品类管理</a></li>
+                            <li><a href="#"><i class="icon-tachometer"></i>品牌管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.nav-list -->
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="#">考勤管理</a></li>
+                        <li class="active">部门排班</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>部门排班管理
+                            <small>
+                                <i class="icon-double-angle-right"></i>
+                                给部门设置排班
+                            </small>
+                        </h1>
+
+                    </div>
+                    <!-- /.page-header -->
+
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs" id="myTab">
+                                    <li>
+                                        <a href="ygpb.html">员工排班
+                                        </a>
+                                    </li>
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#bm">部门排班 
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="bm" class="tab-pane in active">
+                                        <div class="row">
+                                            <div class="widget-box">
+                                                <div class="widget-header header-color-blue">
+                                                    <h4>对单个部门进行独立排班，不设置则使用上级部门班次</h4>
+                                                </div>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div id="categoryTree">
+                                                    <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>部门名称</th>
+                                                                <th>班次</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr layer="1">
+                                                                <td>
+                                                                    <span class="closeTree" onclick="categoryTree(this,1)"></span>
+                                                                    <div style="font-weight: bolder">研发部</div>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="label label-success">默认部门班次</span>
+                                                                    <table id="sample-table-3" class="table table-striped table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>星期一</th>
+                                                                                <th>星期二</th>
+                                                                                <th>星期三</th>
+                                                                                <th>星期四 </th>
+                                                                                <th>星期五</th>
+                                                                                <th>星期六</th>
+                                                                                <th>星期日</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+
+                                                                <td>
+                                                                    <a href="bmpb-bianji.html"><i class="icon-edit"></i> 编辑</a>
+                                                                    <span class="muted">|</span>
+                                                                    <a href="#" id="delete"><i class="icon-trash "></i> 删除</a>
+
+                                                                </td>
+
+                                                            </tr>
+
+                                                            <tr layer="2">
+                                                                <td>
+                                                                    <span onclick="categoryTree(this,2)"></span>
+                                                                    <div class="name">陈</div>
+
+                                                                </td>
+                                                                <td>
+                                                                    <span class="label label-default">默认部门班次[继承]</span>
+                                                                    <table id="sample-table-4" class="table table-striped table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>星期一</th>
+                                                                                <th>星期二</th>
+                                                                                <th>星期三</th>
+                                                                                <th>星期四 </th>
+                                                                                <th>星期五</th>
+                                                                                <th>星期六</th>
+                                                                                <th>星期日</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <ol style="list-style-type: none; padding: 0px; margin: 0px;">
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">09:00</span>-<span data-needcheckout="True">12:00</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <span data-needcheckin="True">13:30</span>-<span data-needcheckout="True">17:30</span>
+                                                                                        </li>
+                                                                                    </ol>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="bmpb-bianji2.html"><i class="icon-edit"></i> 编辑</a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.page-content -->
+
+            </div>
+            <!-- /.main-content -->
+
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.main-container -->
+
+
+
+    <div id="modifyModal" class="hidden">
+        <form class="form-horizontal">
+            <div class="box-body ylui-box-body">
+                <div class="messages">
+                    <h4>确定删除？</h4>
+
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+
+
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.full.min.js"></script>
+
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+    <script src="js/mycontrol.js"></script>
+
+
+
+    <script type="text/javascript">
+
+
+        function categoryTree(obj, layer) {
+            var state = $(obj).attr("class");
+            if (state == "openTree") {
+                $(obj).parent().parent().nextAll().each(function (index) {
+                    var flag = parseInt($(this).attr("layer")) - layer;
+                    if (flag == 1) {
+                        $(this).show();
+                    }
+                    else if (flag == 0) {
+                        return false;
+                    }
+                })
+                $(obj).removeClass("openTree").addClass("closeTree");
+            }
+            else if (state == "closeTree") {
+                $(obj).parent().parent().nextAll().each(function (index) {
+                    if (parseInt($(this).attr("layer")) > layer) {
+                        $(this).hide();
+                        $(this).find("th span").each(function (i) {
+                            if ($(this).hasClass("closeTree")) {
+                                $(this).removeClass("closeTree").addClass("openTree");
+                            }
+                        })
+                    }
+                    else {
+                        return false;
+                    }
+                })
+                $(obj).removeClass("closeTree").addClass("openTree");
+            }
+        };        $(document).ready(function () {
+            $('#delete').on('click', function () {
+                var dialog = $('#modifyModal');
+                dialog.bs_dialog({
+                    title: '<i class="orange icon-envelope"></i>' + '<span class="ylui-title-span">' + "信息" + '</span>',
+                    buttons: [{
+                        dom: '<button class="btn btn-default no-border mx-xs-quick">取消</button><button class="btn btn-primary no-border mx-xs-quick">删除</button>', handler: function () {
+                            dialog.bs_dialog("close");
+                        }
+                    }],
+                    onShow: function () {
+                        $('#modifyModal2').hideLoading();
+                    }
+
+                });
+                dialog.removeClass("hidden");
+                dialog.bs_dialog("open");
+
+            });
+        })
+
+
+    </script>
+
+</body>
+</html>

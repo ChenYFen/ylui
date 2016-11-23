@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>热度图</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/ace.min.css" rel="stylesheet" />
+
+    <link href="plugins/slider/bootstrap-slider.css" rel="stylesheet" />
+
+    <style type="text/css">
+        body { background-color: #010101; }
+        .st-btn { text-align: center; padding: 12px 0; margin:0 auto;}
+        .rdt { width: 100%; height: 100%; margin-top: 5px; }
+        .rdt-images { padding: 0px; text-align: center; margin-bottom: 7px; }
+            .rdt-images img { max-width: 100%; }
+        .rd { float: right; margin-top: -188px; margin-right: 10px; }
+        #ylui-btn-datepicker { margin-left: 389px; margin-top: -31px; }
+            #ylui-btn-datepicker .btn { height: 34px; margin-top: -3px; }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="widget-box-overlay"></div>
+        <div style="z-index: 999; position: fixed; width: 100%;">
+
+            <div class="rdt">
+                <div class="rdt-images" style="background-image: url(images/images.png); background-position: center; background-repeat: no-repeat; background-attachment: scroll; background-size: 75% 100%;">
+                    <!--<img src="images/picture.jpg" />-->
+                </div>
+                <div class="rd">
+                    <p>高</p>
+                    <span>
+                        <img src="images/heatmaptip.gif" alt="空间密度图例" />
+                    </span>
+                    <p>低</p>
+                </div>
+
+            </div>
+
+            <div class="st-btn">
+                <button class="btn btn-primary btn-sm">日报视图</button>
+                <button class="btn btn-sm ">周报视图</button>
+                <button class="btn btn-sm">月报视图</button>
+                <div id="ylui-btn-datepicker"></div>
+                <div class="wrapper" style="width: 80%; margin: 12px auto; height: 80px;">
+                    <div id="date_range" style="width: 80%;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="plugins/slider/bootstrap-slider.js"></script>
+    <script src="js/mycontrol.js"></script>
+    <script src="js/ace.min.js"></script>
+
+    <script type="text/javascript">
+        "use strict";
+        $(function () {
+            resetbg();
+            $(window).resize(function () {
+                resetbg();
+            });
+
+            $('#bili').change(function () {
+                setbl();
+            });
+            sliderBox('2016-10');
+
+            $("#ylui-btn-datepicker").DatePicker({
+                onChange: function (v) {
+                    sliderBox(v);
+                }
+            });
+
+
+        });
+
+        function getDate(datestr) {
+            var temp = datestr.split("-");
+            var date = new Date(temp[0], (temp[1] - 1), temp[2]);
+            return date;
+        }
+        function dateFormat(date) {
+            date = date.toString();
+            var fmt = date.substr(0, 4) + '-' + date.substr(4, 2) + '-' + date.substr(6, 2);
+            return fmt;
+        }
+
+        var currentSlider = null;
+        //参数2016-10
+        function sliderBox(currentDate) {
+
+            var t = [], tl = [];
+            var start = currentDate + "-01";
+            var startTime = getDate(start);
+            var currentMonth = startTime.getMonth();
+            var nextMonth = ++currentMonth;
+            var nextMonthFirstDay = new Date(startTime.getFullYear(), nextMonth, 1);
+            var oneDay = 1000 * 60 * 60 * 24;
+            var endTime = new Date(nextMonthFirstDay - oneDay);
+
+            //alert(startTime);
+            //return;
+            while ((endTime.getTime() - startTime.getTime()) >= 0) {
+                var year = startTime.getFullYear();
+                var month = (startTime.getMonth() + 1).toString().length == 1 ? "0" + (startTime.getMonth() + 1).toString() : startTime.getMonth() + 1;
+                var day = startTime.getDate().toString().length == 1 ? "0" + startTime.getDate() : startTime.getDate();
+                t.push(parseInt(year + '' + month + '' + day));
+                tl.push(day);
+                startTime.setDate(startTime.getDate() + 1);
+            }
+
+            $('.wrapper').empty();
+            var tmp = $('<div id="date_range" style="width: 80%;"></div>')
+            $('.wrapper').append(tmp);
+            var slider = tmp.slider({
+                ticks: t,
+                formatter: function (v) {
+                    return dateFormat(v, 'yyyy-MM-dd');
+                },
+                ticks_labels: tl,
+                ticks_snap_bounds: 1
+            });
+
+            slider.on('slideStop', function (o) {
+                //console.log(o.value);
+            }).on('slide', function (o) {
+                //$('#tttt').html(o.value);
+            });
+        }
+
+        function resetbg() {
+            var dh = $(document).height();
+            var headh = $('.st-btn').outerHeight();
+            var h = dh - headh;
+            var w = h * 4 / 3;
+
+            setbl();
+            $('.rdt-images').css({ height: h });
+        }
+        function setbl() {
+            var dh = $(document).height();
+            var headh = $('.st-btn').outerHeight();
+            var h = dh - headh - 50;
+            var bl = $('#bili').val();
+            if (bl == '43') {
+                $('.rdt-images').css({ 'background-size': '75% 100%' });
+            }
+            else if (bl == '1') {
+                $('.rdt-images').css({ 'background-size': h + 'px ' + h + 'px' });
+            }
+        }
+
+    </script>
+
+</body>
+</html>

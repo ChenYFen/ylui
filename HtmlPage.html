@@ -1,0 +1,879 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>vccgbcb部门排班-浩顺考勤云平台</title>
+    <meta name="description" content="我爱考勤云平台" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+     <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/jquery-ui-1.10.3.full.min.css" rel="stylesheet" />
+    <link href="date-time/bootstrap-timepicker.css" rel="stylesheet" />
+<!--       <link rel="stylesheet" href="css/ui.jqgrid.css" />-->
+    <link rel="stylesheet" href="css/ace.min.css" />
+    <link rel="stylesheet" href="css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="css/ace-skins.min.css" />
+
+   
+
+       <script type="text/javascript">
+           window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+
+     <script src="js/layer2.js"></script>
+    <script src="js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead-bs2.min.js"></script>
+    <script src="date-time/bootstrap-datepicker.min.js"></script>
+    <script src="date-time/bootstrap-timepicker.min.js"></script>
+    <script src="date-time/moment.min.js"></script>
+    <script src="date-time/daterangepicker.min.js"></script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+
+  
+ 
+    <!--[if lt IE 9]>
+		    <script src="/content/js/html5shiv.js"></script>
+		    <script src="/content/js/respond.min.js"></script>
+		<![endif]-->
+<!--    <script type="text/javascript" src="js/main.js"></script>-->
+    
+    <style type="text/css">
+        ._cell
+        {
+            cursor: pointer;
+            position: relative;
+            min-height: 50px;
+            padding: 1px;
+            padding: 5px;
+        }
+        ._cell h2
+        {
+            color: #999;
+        }
+        ._cell li
+        {
+            line-height: 150%;
+        }
+        .selected
+        {
+            background: #428BCA;
+            color: #FFF;
+        }
+        .selected h2
+        {
+            color: #FFF;
+        }
+        .attclass {
+            width: 60px;
+        }
+    </style>
+
+  
+    <!--[if lte IE 8]>
+		    <link rel="stylesheet" href="/content/css/ace-ie.min.css" />
+		<![endif]-->
+    <style type="text/css">
+        #txtDepartment, #txtDepartment1
+        {
+            cursor: pointer;
+        }
+        .nav-list li.active > a:after
+        {
+            border-width: 5px;
+            top: 12px;
+        }
+        .nav-list > li.active.open li.active > a:after
+        {
+            border-width: 5px;
+            top: 12px;
+        }
+        .menu-min .nav-list > li.active > a:after
+        {
+            border-width: 3px;
+            top: 15px;
+        }
+        .menu-text
+        {
+            color: #666;
+        }
+        .btn-toolbar
+        {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+        }
+        .dropdown-navbar
+        {
+            width: 183px;
+        }
+        #navbar-company
+        {
+            font-size: 80%;
+            font-family: 微软雅黑;
+        }
+        .notCheck
+        {
+            color: rgb(204, 204, 204);
+        }
+    </style>
+     <style type="text/css">
+        .pb-btn { float: right; margin-right: 3px; }
+        .fc-event { border: 0; background-color: transparent; }
+        .fc-event-inner { text-align: center; }
+        .xuanxian { padding: 10px 0 0 19px; }
+        .ylui-form-horizontal .form-group { border-top: 1px solid #ccc; padding: 10px 0; margin: 0; }
+        table th, table td { text-align: center; }
+        table td { height: 342px; }
+        .table-titile { text-align: left; font-size: 17px; }
+        .selected { background: #428BCA; color: #FFF; }
+        ._cell { min-height: 86px; }
+            ._cell ul { padding: 25px 0 0 0; margin: 0; }
+            ._cell ol { padding: 22px 0 0 0; margin: 0; }
+        .widget-toolbar:before { border: none!important; }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="index.html" class="navbar-brand">
+                    <small>
+                        <i class="icon-cloud"></i>
+                        客户分析云
+                    </small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle ylui-nav-right">
+                            <img class="nav-user-photo" src="images/default_user.jpg" alt="头像" />
+                            <span class="user-info">
+                                <small>admin,欢迎您回来</small>
+                                <small id="localtime">2015-11-26 13：42 星期一</small>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class=" icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="3">
+                                    <i class="icon-edit"></i>
+                                    修改密码
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="logout" href="javascript:void(0);" url="/Account/Auth/Logout">
+                                    <i class="icon-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="light-blue">
+                        <a class="logout ylui-nav-right" href="javascript:void(0);" url="/Account/Auth/Logout">
+                            <i class="icon-off"></i>
+                            注销
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+                        <span class="btn btn-info"></span>
+                        <span class="btn btn-warning"></span>
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+                <ul class="nav nav-list">
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">控制台 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">系统管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="table.html"><i class="icon-key"></i>角色管理</a></li>
+                            <li><a href="tree.html"><i class="icon-user"></i>用户管理</a></li>
+                            <li><a href="#"><i class="icon-remove"></i>系统错误日志</a></li>
+                            <li><a href="#"><i class="icon-opera"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">签到宝管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="message.html"><i class="icon-envelope"></i>信息中心</a></li>
+                            <li>
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="icon-double-angle-right"></i>
+                                    工作管理
+                                    <b class="arrow icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li><a href="project.html"><i class="icon-edit ylui-title-icon"></i>工作计划</a></li>
+                                    <li><a href="shenpi.html"><i class="icon-check"></i>审批管理</a></li>
+                                    <li><a href="shenqing.html"><i class="icon-edit ylui-title-icon"></i>申请管理</a></li>
+                                    <li><a href="jianbao.html"><i class="icon-file-text" aria-hidden="true"></i>工作简报</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="icon-bar-chart"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-calendar"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-file-o"></i>管理</a></li>
+                            <li><a href="#"><i class="icon-pie-chart"></i>管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">考勤管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="banci.html"><i class="icon-pie-char"></i>班次管理</a></li>
+                            <li><a href="kaoqinjl.html"><i class="icon-user"></i>考勤记录</a></li>
+                            <li><a href="kaoqintj.html"><i class="icon-user"></i>考勤统计</a></li>
+                            <li><a href="MonthReport.html"><i class="icon-user"></i>签卡记录管理</a></li>
+                            <li><a href="ygpb.html"><i class="icon-arrows-alt"></i>人员排班管理</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">OA管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-user"></i>员工管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>部门管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>组织结构管理</a></li>
+                            <li><a href="#"><i class="icon-qrcode"></i>考勤管理</a></li>
+                            <li><a href="#"><i class="icon-line-chart"></i>报表分析</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">品牌</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-tachometer"></i>品类管理</a></li>
+                            <li><a href="#"><i class="icon-tachometer"></i>品牌管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.nav-list -->
+
+                <div class="sidebar-collapse" id="Div1">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+                <!-- #sidebar-shortcuts -->
+               
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li>考勤管理</li>
+                        <li>部门排班管理</li>
+                        <li class="active">研发部排班</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            
+
+<div class="page-header">
+    <h1>
+        部门排班管理<small><i class="icon-double-angle-right"></i> 考勤人员排班操作</small></h1>
+</div>
+<!-- /.page-header -->
+<div class="btn-toolbar" style="margin-bottom: 2px;">
+    <div class="btn-group">
+        <a class="btn" href="#back" onclick="history.back();return false;"><i class="icon-arrow-left">
+        </i>返回</a>
+    </div>
+</div>
+<ul class="nav nav-tabs">
+    <li><a  href="/AttendanceManage/EmployeeShift/EmployeeShift"><span>员工排班</span></a></li>
+    <li class="active"><a href="/AttendanceManage/EmployeeShift/sample-table-2"><span>部门排班</span></a></li>
+    <li><a href="/AttendanceManage/EmployeeShift/ImportEmployeeList"><span>人员排班导入列表</span></a></li>
+    <li><a href="/AttendanceManage/EmployeeShift/ImportTimeList"><span>时间段导入列表</span></a></li>
+</ul>
+
+<div class="row" style="margin-top: 10px; min-width:940px;">
+    <div class="col-xs-9" style="float:left">
+        <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="7" class="table-titile"><span>陈</span><span> 部门排班</span></th>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <th>星期一</th>
+                                                            <th>星期二</th>
+                                                            <th>星期三</th>
+                                                            <th>星期四 </th>
+                                                            <th>星期五</th>
+                                                            <th>星期六</th>
+                                                            <th>星期日</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="ylui-table-tbody">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="_cell" data-lock="0">
+                                                                    <div class="fc-day-content">
+                                                                        <div style="position: relative; height: 0px;">
+                                                                            <ol style="list-style-type: none;">
+                                                                                <li>
+                                                                                    <span title="签到(必须):08:00-10:00  签退：(必须)：11:00-13:00 " class='label label-primary'>09:00-12:00
+                                                                                    </span>
+
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span title="签到(必须):12:30-14:30  签退：(必须)：16:30-18:30 " class='label label-primary'>13:30-17:30
+                                                                                    </span>
+                                                                                </li>
+                                                                            </ol>
+                                                                            <input name="shift_attclassid-0" type="hidden" value="10,5," />
+                                                                            <i class="icon-ok bigger-110" style="position: absolute; top: 10px; right: 10px; display: none;"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="_cell" data-lock="0">
+                                                                    <div class="fc-day-content">
+                                                                        <div style="position: relative; height: 0px;">
+                                                                            <ol style="list-style-type: none;">
+                                                                                <li>
+                                                                                    <span title="签到(必须):08:00-10:00  签退：(必须)：11:00-13:00 " class='label label-primary'>09:00-12:00
+                                                                                    </span>
+
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span title="签到(必须):12:30-14:30  签退：(必须)：16:30-18:30 " class='label label-primary'>13:30-17:30
+                                                                                    </span>
+                                                                                </li>
+                                                                            </ol>
+                                                                            <input name="shift_attclassid-1" type="hidden" value="10,5," />
+                                                                            <i class="icon-ok bigger-110" style="position: absolute; top: 10px; right: 10px; display: none;"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="_cell" data-lock="0">
+                                                                    <div class="fc-day-content">
+                                                                        <div style="position: relative; height: 0px;">
+                                                                            <ol style="list-style-type: none;">
+                                                                                <li data-attclassid="10" class="notattovertime">
+                                                                                    <span title="签到(必须):08:00-10:00  签退：(必须)：11:00-13:00 " class='label label-primary'>09:00-12:00
+                                                                                    </span>
+
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span title="签到(必须):12:30-14:30  签退：(必须)：16:30-18:30 " class='label label-primary'>13:30-17:30
+                                                                                    </span>
+                                                                                </li>
+                                                                            </ol>
+                                                                            <input name="shift_attclassid-2" type="hidden" value="10,5," />
+                                                                            <i class="icon-ok bigger-110" style="position: absolute; top: 10px; right: 10px; display: none;"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="_cell" data-lock="0">
+                                                                    <div class="fc-day-content">
+                                                                        <div style="position: relative; height: 0px;">
+                                                                            <ol style="list-style-type: none;">
+                                                                                <li>
+                                                                                    <span title="签到(必须):08:00-10:00  签退：(必须)：11:00-13:00 " class='label label-primary'>09:00-12:00
+                                                                                    </span>
+
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span title="签到(必须):12:30-14:30  签退：(必须)：16:30-18:30 " class='label label-primary'>13:30-17:30
+                                                                                    </span>
+                                                                                </li>
+                                                                            </ol>
+                                                                            <input type="hidden" name="shift_attclassid-3" />
+                                                                            <i class="icon-ok bigger-110" style="position: absolute; top: 10px; right: 10px; display: none;"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </td>
+                                                            <td>
+                                                                <div class="_cell" data-lock="0">
+                                                                    <div class="fc-day-content">
+                                                                        <div style="position: relative; height: 0px;">
+
+                                                                            <ol style="list-style-type: none;">
+                                                                                <li>
+                                                                                    <span title="签到(必须):08:00-10:00  签退：(必须)：11:00-13:00 " class='label label-primary'>09:00-12:00
+                                                                                    </span>
+
+                                                                                </li>
+                                                                                <li d>
+                                                                                    <span title="签到(必须):12:30-14:30  签退：(必须)：16:30-18:30 " class='label label-primary'>13:30-17:30
+                                                                                    </span>
+                                                                                </li>
+                                                                            </ol>
+                                                                            <input type="hidden" name="shift_attclassid-4" value="10,5," />
+                                                                            <i class="icon-ok bigger-110" style="position: absolute; top: 10px; right: 10px; display: none;"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="_cell" data-lock="0">
+                                                                    <div class="fc-day-content">
+                                                                        <div style="position: relative; height: 0px;">
+                                                                            <ol style="list-style-type: none;">
+                                                                            </ol>
+                                                                            <input type="hidden" name="shift_attclassid-5" value="10,5," />
+                                                                            <i class="icon-ok bigger-110" style="position: absolute; top: 10px; right: 10px; display: none;"></i>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="_cell" data-lock="0">
+                                                                    <div class="fc-day-content">
+                                                                        <div style="position: relative; height: 0px;">
+                                                                            <ol style="list-style-type: none;">
+                                                                            </ol>
+                                                                            <input type="hidden" name="shift_attclassid-6" value="13" />
+                                                                            <i class="icon-ok bigger-110" style="position: absolute; top: 10px; right: 10px; display: none;"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+
+                                                    </tbody>
+                                                </table>
+        
+    </div>
+    <!-- /span -->
+    <div class="col-xs-3" style="float:left;width:235px;padding-left:0px;">
+        <div class="tabbable">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a data-toggle="tab" href="#sjd"><i class="green icon-time bigger-110">
+                </i>时间段 </a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="sjd" class="tab-pane  in active">
+                    <table class="table">
+                        <tr>
+                            <th style="text-align: right; vertical-align: middle; width: 80px;">
+                                上班时间
+                            </th>
+                            <td>
+                                <div class="input-group bootstrap-timepicker">
+                                    <input id="checkinTime" name="checkintime" type="text" value="08:00" class="form-control" />
+                                    <span class="input-group-addon" style="padding:0px;"><i class="icon-time bigger-110"></i></span>
+                                </div>
+                              
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right; vertical-align: middle;">
+                                下班时间
+                            </th>
+                            <td>
+                                <div class="input-group bootstrap-timepicker">
+                                    <input id="checkoutTime" name="checkouttime" type="text" value="12:00" class="form-control" />
+                                    <span class="input-group-addon" style="padding:0px;"><i class="icon-time bigger-110"></i></span>
+                                </div>
+                              
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right; vertical-align: middle;">
+                                记工作日
+                            </th>
+                            <td>
+                                <select name="countDay" id="countDay" class="form-control">
+                                <option value="0">请选择</option>
+                                    <option value="0.5">半天</option>
+                                    <option value="1">一天</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: right; vertical-align: middle;">
+                                选项
+                            </th>
+                            <td>
+                                <label>
+                                    <input name="NeedCheckin" id="needcheckin" type="checkbox" checked="checked" value="True"/>
+                                    必须签到
+                                </label>
+                                <label>
+                                    <input name="NeedCheckout" id="needcheckout" type="checkbox" checked="checked" value="True"/>
+                                    必须签退
+                                </label>
+                <label class="block"><a style="cursor: pointer" id="advanceBtn">高级选项</a></label>
+                            </td>
+                        </tr>
+                         <tr id="advanceItem">
+            <td colspan="2" class="center" style="padding:0px;">
+                <label style="padding-bottom: 5px; padding-top:5px;">
+                    上班：<input type="number" class="attclass" name="StartCheckin" id="StartCheckin" value="60" data-oldval="60" title="提前多少分钟开始打卡" data-rel="tooltip"/> 
+                    <input type="number" class="attclass"  name="EndCheckin" id="EndCheckin" value="60" data-oldval="60" title="多少分钟后结束打卡" data-rel="tooltip"/>
+                </label>
+               <label style="padding-bottom: 5px;">
+                    下班：<input type="number" class="attclass" name="StartCheckout" id="StartCheckout" value="60" data-oldval="60" title="提前多少分钟开始打卡" data-rel="tooltip"/> 
+                    <input type="number" class="attclass"  name="EndCheckout" id="EndCheckout" value="60" data-oldval="60" title="多少分钟后结束打卡" data-rel="tooltip"/>
+                </label>
+            </td>
+        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;padding:0px; padding-top:5px;">
+                                <div style="text-align: center;">
+                                    <button type="button" id="btnAddClass" class="btn btn-xs btn-success"  title="添加时段" data-href="/AttendanceManage/EmployeeShift/_SaveAttClass">
+                                        <i class="icon-plus"></i>添加时段</button>
+                                    <button type="button" id="btnClearClass" class="btn btn-xs btn-danger" style="margin-left: 20px;"
+                                        title="清空">
+                                        <i class="icon-remove"></i>清空</button>
+                                </div>
+                              
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+     <!--  <div id="dvSave" style="display:none;">
+            <button id="btnSave" type="submit" class="btn btn-success" style="width: 100%; margin-top: 10px;"
+                title="保存">
+                保存</button>
+            <input type="hidden" name="DeptID" value="2" />
+            <input type="hidden" name="DeptName" value="vccgbcb" />
+            <input name="ReturnUrl" type="hidden" value="http://www.hsuncloud.com/AttendanceManage/EmployeeShift/sample-table-2" />
+        </div>-->
+    </div>
+    <!-- /span -->
+</div>
+
+
+                            <!-- PAGE CONTENT ENDS -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+            <!-- /#ace-settings-container -->
+        </div>
+        <!-- /.main-container-inner -->
+  
+    <!-- /.main-container -->
+  
+<!--    <script type="text/javascript">
+        var _currentArea = $("#navMenu").attr("_currentArea");
+        var _currentController = $("#navMenu").attr("_currentController");
+        $("#nav" + _currentArea).addClass("active");
+        $("#nav" + _currentArea).addClass("open");
+        $("#ctr_" + _currentController).addClass("active");
+    </script>
+    
+<script type="text/javascript">
+    function changePageSize() {
+        replaceParamVal("pagesize", $("#pagesize").val());
+    }
+
+    function replaceParamVal(paramName, replaceWith) {
+        var oUrl = this.location.href.toString();
+        var nUrl = oUrl;
+        if (nUrl.indexOf("pagesize") > 0) {
+            var re = eval('/(' + paramName + '=)([^&]*)/gi');
+            var nUrl = oUrl.replace(re, paramName + '=' + replaceWith);
+        } else if (nUrl.indexOf("?") > 0) {
+            nUrl = nUrl + "&pagesize=" + $("#pagesize").val();
+        } else {
+            nUrl = nUrl + "?pagesize=" + $("#pagesize").val();
+        }
+        this.location = nUrl;
+    }
+</script>-->
+    <script type="text/javascript">
+
+        $("._cell").click(function () {
+            var _item = $(this).find("input");
+            if (_item.attr("checked") == "checked") {
+                _item.removeAttr("checked");
+                $(this).removeClass("selected");
+                $(this).find(".icon-ok").hide();
+            }
+            else {
+                _item.attr("checked", "checked");
+                $(this).addClass("selected");
+                $(this).find(".icon-ok").show();
+            }
+        });
+
+
+        jQuery(function ($) {
+
+            $('#checkinTime').timepicker({
+                minuteStep: 1,
+                showSeconds: true,
+                showMeridian: false
+            }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            $('#checkoutTime').timepicker({
+                minuteStep: 1,
+                showSeconds: true,
+                showMeridian: false
+            }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            $("#show-option").tooltip({
+                show: {
+                    effect: "slideDown",
+                    delay: 250
+                }
+            });
+            $("#over-time").tooltip({
+                show: {
+                    effect: "slideDown",
+                    delay: 250
+                }
+            });
+
+            $("#show-option2").tooltip({
+                show: {
+                    effect: "slideDown",
+                    delay: 250
+                }
+            });
+            $("#over-time2").tooltip({
+                show: {
+                    effect: "slideDown",
+                    delay: 250
+                }
+            });
+
+
+
+
+        });
+
+
+        $("#word-time").hide();
+        $("#gjxx").click(function () {
+            $("#word-time").toggle();
+        });
+
+        $("#btnAddClass").click(function () {
+            var _count = $("#sample-table-2  .selected").length;
+            if (_count == 0) {
+                layer.msg("请先选择左侧要排班的日期");
+                return false;
+            }
+            var _countDayValue = $("#countDay").val();
+            if (_countDayValue == "0") {
+                layer.msg("请先选择记工作日");
+                return false;
+            }
+            //1、提交表单，添加时间段
+            $.ajax({
+                type: "POST",
+                url: "_SaveAttClass",
+                data: $(this.form).serialize(), // 要提交的表单 
+                success: function (attClass) {
+                    //2、将时间段应用到班次
+                    $("#sample-table-2  .selected").each(function () {
+                        var _classVals = $(this).find("input").val();
+                        if (_classVals) {
+                            if (_classVals.lastIndexOf(',') != (_classVals.length - 1)) {
+                                _classVals += ',';
+                            }
+                        }
+                        var _classList = $(this).find("ol");
+
+                        var attclassID = $("#isovertime").is(":checked") ? attClass.AttClassID + ":10," : attClass.AttClassID + ":0,";
+                        if (("," + _classVals).indexOf("," + attclassID) != -1)
+                            return true; //continue;
+                        if (_classVals.indexOf("-1") != -1) { //清空休息时段
+                            _classVals = "";
+                            _classList.html("");
+                        }
+                        //时间段重复检查
+                        var resultCheck = true;
+                        var _lis = _classList.find("li");
+                        _lis.each(function () {
+                            var item = $(this).text();
+                            if (item == "休息")
+                                return true;
+                            //如果已有时间段08:00-12:00,以下数据均为异常
+                            //1、06:00-09:00，2、09:00-13:00，3、06:00-13:00
+                            resultCheck = validateShiftTime(item.split('-')[0], item.split('-')[1], attClass.CheckinTime, attClass.CheckoutTime);
+                            if (!resultCheck) {
+                                return false;
+                            }
+                        });
+                        if (resultCheck == false) {
+                            layer.msg("添加失败，请检查上班时间、下班时间是否选择正确");
+                            return false;
+                        }
+                        _classVals += attclassID;
+                        $(this).find("input").val(_classVals);
+
+                        var labelClass = $("#isovertime").is(":checked") ? "label-danger" : "label-primary";
+                        _classList.append("<li class='notattovertime'><span class='label " + labelClass + "'>" + attClass.CheckinTime + "-" + attClass.CheckoutTime + "</span></li>");
+
+                        $(this).find("ul").hide();
+
+                    });
+                    //显示保存按钮
+                    $("#dvSave").attr("style", "display:block;");
+                }
+            });
+        });
+
+        $("#btnClearClass").click(function () {
+            var _count = $("#sample-table-2 .selected").length;
+            if (_count == 0) {
+                layer.msg("请先选择左侧要排班的日期");
+                return false;
+            }
+            $("#sample-table-2 .selected").each(function () {
+                $(this).find("input").val("");
+                $(this).find("ol").html("");
+
+                $(this).find("ul").show();
+
+                //显示保存按钮
+                $("#dvSave").attr("style", "display:block;");
+            });
+        });
+
+
+
+
+    </script>
+
+</body>
+</html>

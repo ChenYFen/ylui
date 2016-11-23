@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>考勤统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/fullcalendar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/ace.min.css" />
+    <link rel="stylesheet" href="css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="css/ace-skins.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style type="text/css">
+        .ylui-btn-group .btn { border-width: 1px!important; }
+        .ylui-dropdown-default { height: 350px; overflow: scroll; }
+        .ylui-tj-header { padding: 0 5px 7px 11px; }
+        .ylui-table3 { padding-top: 20px; }
+        .ylui-tab-content { border: 0; padding: 0; }
+        .fc-event { 
+            border:0;
+            background-color:transparent;
+        }
+        #demo {
+            padding:10px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="index.html" class="navbar-brand">
+                    <small>
+                        <i class="icon-cloud"></i>
+                        客户分析云
+                    </small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle ylui-nav-right">
+                            <img class="nav-user-photo" src="images/default_user.jpg" alt="头像" />
+                            <span class="user-info">
+                                <small>admin,欢迎您回来</small>
+                                <small id="localtime">2015-11-26 13：42 星期一</small>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class=" icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="3">
+                                    <i class="icon-edit"></i>
+                                    修改密码
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="logout" href="javascript:void(0);" url="/Account/Auth/Logout">
+                                    <i class="icon-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="light-blue">
+                        <a class="logout ylui-nav-right" href="javascript:void(0);" url="/Account/Auth/Logout">
+                            <i class="icon-off"></i>
+                            注销
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+                        <span class="btn btn-info"></span>
+                        <span class="btn btn-warning"></span>
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+                <ul class="nav nav-list">
+                    <li class="active">
+                        <a href="index.html">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">控制台 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">系统管理</span>
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-key"></i>角色管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>用户管理</a></li>
+                            <li><a href="#"><i class="icon-remove"></i>系统错误日志</a></li>
+                            <li><a href="#"><i class="icon-opera"></i>操作日志</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-cog" aria-hidden="true"></i>
+                            <span class="menu-text">客流统计分析</span>
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-search"></i>自定义查询</a></li>
+                            <li><a href="#"><i class="icon-line-chart"></i>日客流报表</a></li>
+                            <li><a href="#"><i class="icon-bar-chart"></i>周客流报表</a></li>
+                            <li><a href="#"><i class="icon-calendar"></i>楼层客流报表</a></li>
+                            <li><a href="#"><i class="icon-file-o"></i>店铺报表</a></li>
+                            <li><a href="#"><i class="icon-pie-chart"></i>出入口报表</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">顾客分析</span>
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-pie-char"></i>男女比例分析</a></li>
+                            <li><a href="#"><i class="icon-user"></i>年龄分析</a></li>
+                            <li><a href="#"><i class="icon-user"></i>会员分析</a></li>
+                            <li><a href="#"><i class="icon-user"></i>识别记录</a></li>
+                            <li><a href="#"><i class="icon-arrows-alt"></i>店铺报表</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-user"></i>
+                            <span class="menu-text">OA管理</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-user"></i>员工管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>部门管理</a></li>
+                            <li><a href="#"><i class="icon-user"></i>组织结构管理</a></li>
+                            <li><a href="#"><i class="icon-qrcode"></i>考勤管理</a></li>
+                            <li><a href="#"><i class="icon-line-chart"></i>报表分析</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <i class="icon-dashboard"></i>
+                            <span class="menu-text">品牌</span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#"><i class="icon-tachometer"></i>品类管理</a></li>
+                            <li><a href="#"><i class="icon-tachometer"></i>品牌管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.nav-list -->
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li class="active">控制台</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+
+
+                </div>
+
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>系统管理
+								<small>
+                                    <i class="icon-double-angle-right"></i>
+                                    角色管理
+                                </small>
+                        </h1>
+                    </div>
+                    <!-- /.page-header -->
+
+                    <div class="row">
+                        <div class="col-sm-12 ylui-tj-header">
+                            <div class="col-sm-6">
+                                <div class="btn-group ylui-btn-group">
+                                    <button data-toggle="dropdown" class="btn btn-white">
+                                        研发部
+										    <span class="icon-caret-down icon-on-right"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu dropdown-default">
+                                        <li>
+                                            <a href="#">研发部</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">人事部</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">销售部</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">财务部</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="btn-toolbar">
+                                    <div class="btn-group ylui-btn-group">
+                                        <button data-toggle="dropdown" class="btn btn-white">
+                                            2016年
+										        <span class="icon-caret-down icon-on-right"></span>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-default">
+                                            <li>
+                                                <a href="#">2015年</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">2014年</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">2013年</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">2012年</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="btn-group ylui-btn-group">
+                                        <button data-toggle="dropdown" class="btn btn-white">
+                                            9月
+										        <span class="icon-caret-down icon-on-right"></span>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-default">
+                                            <li>
+                                                <a href="#">12月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">11月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">10月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">9月</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">8月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">7月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">6月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">5月</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">4月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">3月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">2月</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">1月</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="btn-group ylui-btn-group">
+                                        <button data-toggle="dropdown" class="btn btn-white">
+                                            27日
+										        <span class="icon-caret-down icon-on-right"></span>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-default ylui-dropdown-default">
+                                            <li>
+                                                <a href="#">30日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">29日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">28日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">27日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">26日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">25日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">24日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">22日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">21日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">20日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">19日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">18日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">17日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">16日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">15日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">14日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">13日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">12日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">11日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">10日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">9日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">8日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">7日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">6日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">5日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">4日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">3日</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="#">2日</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">1日</a>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--/btn-toolbar-->
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>迟到（次）</th>
+                                            <th>早退（次） </th>
+                                            <th>缺卡（次）</th>
+                                            <th>IP异常（次）</th>
+                                            <th>位置异常（次</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="ylui-table-tbody">
+                                        <tr>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 ylui-table3">
+                            <div class="table-responsive">                               
+                                <table id="sample-table-3" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>姓名</th>
+                                            <th>部门 </th>
+                                            <th>实际出勤（天）</th>
+                                            <th>迟到（次）</th>
+                                            <th>早退（次） </th>
+                                            <th>缺卡（次）</th>
+                                            <th>IP异常（次）</th>
+                                            <th>位置异常（次</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="ylui-table-tbody">
+                                        <tr>
+                                            <td><a onclick="rili()" href="#">点我</a></td>
+                                            <td>研发部</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                                                     
+                               
+                            </div>
+                            <div id="demo" >
+                                  
+                                </div>
+                             
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+
+
+        </div>
+        <!-- /.main-container-inner -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <!-- /.main-container -->
+
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fullcalendar.min.js"></script>
+    <script src="js/typeahead-bs2.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/jquery.dataTables.bootstrap.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+
+    <script type="text/javascript">
+        function rili() {
+            var t = '<div id="calendar"></div>';
+            document.getElementById('demo').innerHTML = t;
+            var calendar = $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                firstDay: 1,
+                contentHeight: 550,
+                contentFormat: 'ddd',
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+                dayNamesShort: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+                buttonText: {
+                    today: '今天',
+                    month: '月',
+                    week: '周',
+                    day: '天'
+                },
+                events: [
+                    {
+                        title: '缺卡',
+                        start: '2016/09/28',
+                        textColor: 'red',
+                    },
+                    {
+                        title: '缺卡',
+                        start: '2016/09/01',
+                        textColor: 'red',
+                    }
+                ]
+
+            });
+          
+        };
+        jQuery(function ($) {
+           
+            var oTable1 = $('#sample-table-2').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+                ]
+            });
+
+            var oTable1 = $('#sample-table-3').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+                ]
+            });
+
+
+        });
+    </script>
+</body>
+</html>

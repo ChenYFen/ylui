@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- basic styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/ace.min.css" />
+    <link rel="stylesheet" href="css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="css/ace-skins.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <style type="text/css">
+        .yluiheader-btn { padding: 5px 5px; }
+        .ylui-btn-left { float: left; }
+        .ylui-form-search { display: inline-block; }
+        .ylui-nav-search-input { height: 34px; }
+        .input-icon > input { padding-top: 2px; }
+        .input-icon > [class*="icon-"] { line-height: 34px; }
+        .ylui-btn-right { float: right; }
+        .btn { border-width: 1px!important; }
+        .ylui-tab-content { border: 0; }
+        .ylui-btn-right a:focus { background-color: #2f7bba!important;  }
+        .ylui-modal-content { min-width: 450px; margin-top: 45%; z-index: 1; margin-left: auto; margin-right: auto; }
+        .ylui-modal-header { height: 45px; background-image: linear-gradient(to bottom,#f8f8f8 0,#ececec 100%); line-height: 45px; font-size: 18px; }
+        .ylui-header-title { padding-left: 13px; font-family: "宋体"; }
+        .ylui-close { padding: 12px 20px 10px 0!important; }
+        .ylui-box { margin-bottom: 0; border: 0; border-radius: 0; padding: 20px; background-color: #fff; }
+        .ylui-title-icon { color: #e06b15; }
+        .ylui-box-body { border: 1px solid #ccd1f2; padding: 10px; }
+        .ylui-table-left { color: #0201ff; }
+        .ylui-formgroup-input { margin-left: 0; }
+        .ylui-footer { background-color: #f0f2f8; margin-top: 0; }
+        .ylui-form-group-checkbox { display: inline-block; }
+        .ylui-span-time, .ylui-title-span { padding: 0 8px; }
+        .ylui-icon {cursor: pointer; margin-left: 10px; font-size: 20px; }
+        .ylui-time-input { padding-bottom: 10px; }
+        a:hover { text-decoration: none; }
+        .ylui-active { background-color: red; }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-default" id="navbar">
+        <script type="text/javascript">
+            try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+        </script>
+        <div class="navbar-container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="index.html" class="navbar-brand">
+                    <small>
+                        <i class="icon-cloud"></i>
+                        客户分析云
+                    </small>
+                </a>
+                <!-- /.brand -->
+            </div>
+            <!-- /.navbar-header -->
+
+            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle ylui-nav-right">
+                            <img class="nav-user-photo" src="images/default_user.jpg" alt="头像" />
+                            <span class="user-info">
+                                <small>admin,欢迎您回来</small>
+                                <small id="localtime">2015-11-26 13：42 星期一</small>
+                            </span>
+                            <i class="icon-caret-down"></i>
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                <a href="#">
+                                    <i class=" icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li>
+                                <a href="3">
+                                    <i class="icon-edit"></i>
+                                    修改密码
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <a class="logout" href="javascript:void(0);" url="/Account/Auth/Logout">
+                                    <i class="icon-power-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="light-blue">
+                        <a class="logout ylui-nav-right" href="javascript:void(0);" url="/Account/Auth/Logout">
+                            <i class="icon-off"></i>
+                            注销
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.navbar -->
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler" href="#">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <button class="btn btn-success">
+                            <i class="icon-signal"></i>
+                        </button>
+                        <button class="btn btn-info">
+                            <i class="icon-pencil"></i>
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="icon-group"></i>
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="icon-cogs"></i>
+                        </button>
+                    </div>
+
+                    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                        <span class="btn btn-success"></span>
+                        <span class="btn btn-info"></span>
+                        <span class="btn btn-warning"></span>
+                        <span class="btn btn-danger"></span>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+                <ul class="nav nav-list">
+						<li class="active">
+							<a href="index.html">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text"> 控制台 </span>
+							</a>
+						</li>
+
+						  <li>
+					 <a href="#" class="dropdown-toggle">
+						<i class="icon-cog" aria-hidden="true"></i>
+						<span class="menu-text">系统管理</span>
+	
+						<b class="arrow icon-angle-down"></b>
+					  </a>
+						<ul class="submenu">
+							<li><a href="table.html"><i class="icon-key"></i>角色管理</a></li>
+							<li><a href="tree.html"><i class="icon-user"></i>用户管理</a></li>
+							<li><a href="#"><i class="icon-remove"></i>系统错误日志</a></li> 
+							<li><a href="#"><i class="icon-opera"></i>操作日志</a></li> 
+						</ul>
+				   </li>
+
+						 <li>
+					 <a href="javascript:;" class="dropdown-toggle">
+						<i class="icon-cog" aria-hidden="true"></i>
+						<span class="menu-text">签到宝管理</span>
+	
+						<b class="arrow icon-angle-down"></b>
+					  </a>
+						<ul class="submenu">
+							<li><a href="message.html"><i class="icon-envelope"></i>信息中心</a></li>
+							<li>
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="icon-double-angle-right"></i>
+                                      工作管理
+                                    <b class="arrow icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu" >
+                                    <li><a href="project.html"><i class="icon-edit ylui-title-icon"></i>工作计划</a></li>
+                                    <li><a href="shenpi.html"><i class="icon-check"></i>审批管理</a></li>
+                                    <li><a href="shenqing.html"><i class="icon-edit ylui-title-icon"></i>申请管理</a></li>
+                                    <li><a href="jianbao.html"><i class="icon-file-text" aria-hidden="true"></i>工作简报</a></li>
+                                </ul>
+							</li>
+							<li><a href="#"><i class="icon-bar-chart"></i>管理</a></li> 
+							<li><a href="#"><i class="icon-calendar"></i>管理</a></li>
+							<li><a href="#"><i class="icon-file-o"></i>管理</a></li> 
+							<li><a href="#"><i class="icon-pie-chart"></i>管理</a></li> 
+						</ul>
+				   </li>
+				   
+				   <li>
+					 <a href="javascript:;" class="dropdown-toggle">
+						<i class="icon-user"></i>
+						<span class="menu-text">考勤管理</span>
+	
+						<b class="arrow icon-angle-down"></b>
+					  </a>
+						<ul class="submenu">
+							<li><a href="banci.html"><i class="icon-pie-char"></i>班次管理</a></li>
+							<li><a href="kaoqinjl.html"><i class="icon-user"></i>考勤记录</a></li>
+							<li><a href="kaoqintj.html"><i class="icon-user"></i>考勤统计</a></li> 
+							<li><a href="#"><i class="icon-user"></i>管理</a></li>
+							<li><a href="#"><i class="icon-arrows-alt"></i>管理</a></li> 
+						</ul>
+				   </li>
+				   
+				   <li>
+					 <a href="javascript:;" class="dropdown-toggle">
+						<i class="icon-user"></i>
+						<span class="menu-text">OA管理</span>
+	
+						<b class="arrow icon-angle-down"></b>
+					  </a>
+						<ul class="submenu">
+							<li><a href="#"><i class="icon-user"></i>员工管理</a></li>
+							<li><a href="#"><i class="icon-user"></i>部门管理</a></li>
+							<li><a href="#"><i class="icon-user"></i>组织结构管理</a></li> 
+							<li><a href="#"><i class="icon-qrcode"></i>考勤管理</a></li>
+							<li><a href="#"><i class="icon-line-chart"></i>报表分析</a></li> 
+						</ul>
+				   </li>
+				   
+				   <li>
+					 <a href="javascript:;" class="dropdown-toggle">
+						<i class="icon-dashboard"></i>
+						<span class="menu-text">品牌</span>
+	
+						<b class="arrow icon-angle-down"></b>
+					  </a>
+						<ul class="submenu">
+							<li><a href="#"><i class="icon-tachometer"></i>品类管理</a></li>
+							<li><a href="#"><i class="icon-tachometer"></i>品牌管理</a></li>
+						</ul>
+				   </li>
+					</ul><!-- /.nav-list -->
+                
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+                </script>
+            </div>
+
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li class="active">控制台</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+
+
+                </div>
+
+                <div class="page-content">
+                    <div class="page-header">
+                        <h1>考勤管理
+								<small>
+                                    <i class="icon-double-angle-right"></i>
+                                    考勤记录
+                                </small>
+                        </h1>
+                    </div>
+                    <!-- /.page-header -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-6 ">
+                                <button class="btn btn-white" data-toggle="modal" data-target="#myModal"><i class="icon-plus" aria-hidden="true"></i>新建班组</button>
+                                <button class="btn btn-white">导出排班表</button>
+                                <form class="form-search ylui-form-search">
+                                    <span class="input-icon">
+                                        <input type="text" placeholder="请输入班组名称" class="nav-search-input ylui-nav-search-input" id="Text1" autocomplete="off">
+                                        <i class="icon-search" aria-hidden="true"></i>
+                                    </span>
+                                </form>
+                            </div>
+                            <div class="col-sm-6 ">
+                                <div class="btn-group ylui-btn-right">
+                                    <a class="btn btn-primary active" data-toggle="tab" href="#banzu">班组</a>
+                                    <a class="btn btn-white" data-toggle="tab" href="#renyuan">人员</a>
+                                    <a class="btn btn-white" data-toggle="tab" href="#banci">班次</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <div class="tab-content ylui-tab-content">
+                                    <div id="banzu" class="tab-pane in active">
+                                        <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>班组名</th>
+                                                    <th>人员</th>
+                                                    <th>类型</th>
+                                                    <th>排班信息 </th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ylui-table-tbody">
+                                                <tr>
+                                                    <td>默认班组</td>
+                                                    <td>1人</td>
+                                                    <td>按周循环排班</td>
+                                                    <td>默认班次(每周一、二、三、四、五)</td>
+                                                    <td><a href="#">临时排班</a><span class="muted">&nbsp;|&nbsp;</span><a data-toggle="modal" data-target="#myModal"> 编辑</a><span class="muted">&nbsp;|&nbsp;</span><a class="grey" id="show-option" href="#" title="默认组不可删除！"><i class="icon-trash bigger-130"></i></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div id="renyuan" class="tab-pane">
+                                        <table id="sample-table-3" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>人员</th>
+                                                    <th>09-26（一）</th>
+                                                    <th class="ylui-active">09-27（二）</th>
+                                                    <th>09-28（三）</th>
+                                                    <th>09-29（四）</th>
+                                                    <th>09-30（五）</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ylui-table-tbody">
+                                                <tr>
+                                                    <td>默认班次</td>
+                                                    <td>默认班次</td>
+                                                    <td>1人</td>
+                                                    <td>1人</td>
+                                                    <td>1人</td>
+                                                    <td>1人</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    <div id="banci" class="tab-pane">
+                                        <table id="sample-table-4" class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>班次</th>
+                                                    <th>09-26（一）</th>
+                                                    <th>09-27（二）</th>
+                                                    <th>09-28（三）</th>
+                                                    <th>09-29（四）</th>
+                                                    <th>09-30（五）</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ylui-table-tbody">
+                                                <tr>
+                                                    <td>默认班次</td>
+                                                    <td>1人</td>
+                                                    <td>1人</td>
+                                                    <td>1人</td>
+                                                    <td>1人</td>
+                                                    <td>1人</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                  
+                                </div>
+                                <!--/tab-content-->
+                            </div>
+                            <!--/table-responsive-->
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+
+
+        </div>
+        <!-- /.main-container-inner -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+    </div>
+    <!-- /.main-container -->
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="ylui-modal-content">
+                <div class="ylui-modal-header">
+                    <button type="button" class="close ylui-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="ylui-header-title"><i class="icon-edit ylui-title-icon"></i><span class="ylui-title-span">新建班组</span></div>
+                </div>
+
+                <div class="box box-info ylui-box">
+                    <!-- form start -->
+                    <form class="form-horizontal">
+                        <div class="box-body ylui-box-body">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label ylui-table-left">班次名称</label>
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                             <div class="form-group">
+                                <label class="col-sm-3 control-label ylui-table-left">所属部门</label>
+                                <div class="col-sm-7 ylui-formgroup-input">
+                                    <select class="form-control ">
+                                        <option value="1">研发部</option>
+                                        <option value="2">人事部</option>
+                                        <option value="3">销售部</option>
+                                        <option value="4">销售部</option>
+                                        <option value="5">人事部</option>
+                                        <option value="6">销售部</option>
+                                        <option value="7">研发部</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label ylui-table-left">所属周期</label>
+                                <div class="col-sm-7">                                  
+                                     <div class="checkbox ylui-form-group-checkbox">
+                                          <label>
+                                            <input type="checkbox" checked>
+                                             <span class="lbl">星期一</span>
+                                         </label>
+                                       </div>
+                                    <div class="checkbox ylui-form-group-checkbox">
+                                        <label>
+                                            <input type="checkbox" >
+                                            <span class="lbl">星期二</span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox ylui-form-group-checkbox">
+                                        <label>
+                                            <input type="checkbox" >
+                                            <span class="lbl">星期三</span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox ylui-form-group-checkbox">
+                                        <label>
+                                            <input type="checkbox">
+                                            <span class="lbl">星期四</span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox ylui-form-group-checkbox">
+                                        <label>
+                                            <input type="checkbox" >
+                                            <span class="lbl">星期五</span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox ylui-form-group-checkbox">
+                                        <label>
+                                            <input type="checkbox" >
+                                            <span class="lbl">星期六</span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox ylui-form-group-checkbox">
+                                        <label>
+                                            <input type="checkbox" >
+                                            <span class="lbl">星期日</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="form-group">
+                                <label class="col-sm-3 control-label ylui-table-left">班次</label>
+                                <div class="col-sm-7">
+                                   <div id="ylui-input-time">
+                                    <div class="ylui-time-input"  >
+                                        <input type="time" name="user_date" value="09:00" /><span class="ylui-span-time">-</span><input type="time" name="user_date" value="12:00" /><i class="icon-plus-sign ylui-icon" onclick="timeadd()"></i> 
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="modal-footer box-footer ylui-footer">
+                    <div class="ylui-box-footer-btn">
+                        <button type="button" class="btn btn-primary btn-flat ylui-modal-btn "><i class="icon-file"></i>提交</button>
+                        <button type="button" class="btn btn-primary btn-flat ylui-modal-btn "><i class="icon-remove"></i>取消</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/typeahead-bs2.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/jquery.dataTables.bootstrap.js"></script>
+    <script src="js/ace.min.js"></script>
+    <script src="js/ace-elements.min.js"></script>
+    <script src="js/ace-extra.min.js"></script>
+
+    <script type="text/javascript">
+        function timeadd() {
+            var t = $('<div class="ylui-time-input" ><input type="time" name="user_date" value="09:00" /><span class="ylui-span-time">-</span><input type="time" name="user_date" value="12:00" /><i class="icon-minus-sign ylui-icon ylui-minus"></i></div>');
+           t.find('.ylui-minus').click(function () {
+                t.remove();
+            });
+            $("#ylui-input-time").append(t);
+        };
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').focus()
+        });
+        jQuery(function ($) {
+            var oTable1 = $('#sample-table-2').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+                ]
+            });
+
+            var oTable1 = $('#sample-table-3').dataTable({
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false }
+                ]
+            });
+            var oTable1 = $('#sample-table-4').dataTable({
+
+                "aoColumns": [
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                  { "bSortable": false },
+                 { "bSortable": false }
+                ]
+            });
+
+            $("#show-option").tooltip({
+                show: {
+                    effect: "slideDown",
+                    delay: 250
+                }
+            });
+
+            $("#hide-option").tooltip({
+                hide: {
+                    effect: "explode",
+                    delay: 250
+                }
+            });
+            $("#ylui-time").tooltip({
+                hide: {
+                    effect: "explode",
+                    delay: 250
+                }
+            });
+
+        })
+    </script>
+</body>
+</html>
